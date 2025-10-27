@@ -1,0 +1,169 @@
+{
+  "common": {
+    "appName": "ExtraSchools",
+    "search": "Search",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "nav": {
+    "home": "Home",
+    "search": "Search activities",
+    "blog": "Blog",
+    "about": "About us",
+    "dashboard": "Company dashboard",
+    "admin": "Administration",
+    "profile": "Profile",
+    "favorites": "Favorites",
+    "messages": "Messages"
+  },
+  "home": {
+    "hero": {
+      "title": "Discover the best extracurricular activities",
+      "subtitle": "We connect parents with companies offering amazing activities for children",
+      "cta": "Explore activities"
+    },
+    "features": {
+      "title": "Why ExtraSchools?",
+      "feature1": {
+        "title": "Wide variety",
+        "description": "Sports, arts, music, languages and much more"
+      },
+      "feature2": {
+        "title": "Verified companies",
+        "description": "All companies are verified and have real reviews"
+      },
+      "feature3": {
+        "title": "Easy communication",
+        "description": "Contact companies directly through our platform"
+      }
+    }
+  },
+  "search": {
+    "title": "Search activities",
+    "filters": {
+      "category": "Category",
+      "age": "Age",
+      "city": "City",
+      "price": "Price"
+    },
+    "categories": {
+      "all": "All",
+      "sports": "Sports",
+      "arts": "Arts",
+      "music": "Music",
+      "languages": "Languages",
+      "stem": "STEM",
+      "other": "Other"
+    },
+    "noResults": "No activities found",
+    "results": "{count} activities found"
+  },
+  "activity": {
+    "details": "Details",
+    "description": "Description",
+    "age": "Recommended age",
+    "price": "Price",
+    "location": "Location",
+    "company": "Company",
+    "contact": "Contact",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
+    "reviews": "Reviews",
+    "writeReview": "Write review",
+    "noReviews": "No reviews yet"
+  },
+  "company": {
+    "dashboard": "Company dashboard",
+    "companyPortal": "Company Portal",
+    "myActivities": "My activities",
+    "addActivity": "Add activity",
+    "editActivity": "Edit activity",
+    "deleteActivity": "Delete activity",
+    "messages": "Messages",
+    "subscription": "Subscription",
+    "profile": "Company profile",
+    "backToSite": "Back to site"
+  },
+  "auth": {
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signInTitle": "Sign in to your account",
+    "signUpTitle": "Create a new account",
+    "signInButton": "Sign in",
+    "signUpButton": "Create account",
+    "signingIn": "Signing in...",
+    "signingUp": "Creating account...",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "emailLabel": "Email address",
+    "passwordLabel": "Password",
+    "nameLabel": "Full name",
+    "confirmPasswordLabel": "Confirm password",
+    "emailPlaceholder": "you@example.com",
+    "passwordPlaceholder": "Minimum 6 characters",
+    "namePlaceholder": "Your full name",
+    "confirmPasswordPlaceholder": "Repeat your password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signInLink": "Sign in here",
+    "signUpLink": "Sign up for free",
+    "signInWith": "Sign in with {provider}",
+    "orContinueWith": "Or continue with",
+    "registerAsParent": "Register as parent",
+    "registerAsCompany": "Register as company",
+    "roleLabel": "How do you want to use ExtraSchools?",
+    "parentRole": "I'm a Parent",
+    "companyRole": "I'm a Company",
+    "parentRoleDesc": "Looking for activities for my kids",
+    "companyRoleDesc": "I offer extracurricular activities",
+    "companyNameLabel": "Company name",
+    "companyNamePlaceholder": "E.g: ABC Sports",
+    "companyPhoneLabel": "Contact phone",
+    "companyPhonePlaceholder": "+1 555 000 0000",
+    "invalidCredentials": "Invalid email or password",
+    "errorOccurred": "An error occurred. Please try again.",
+    "passwordMismatch": "Passwords do not match",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "companyNameRequired": "Company name is required",
+    "demoCredentials": "Demo credentials:",
+    "errorTitle": "Authentication error",
+    "errorConfiguration": "There is a problem with the server configuration.",
+    "errorAccessDenied": "You don't have permission to access.",
+    "errorVerification": "The verification token has expired or was already used.",
+    "errorDefault": "An error occurred during authentication.",
+    "backToSignIn": "Back to sign in",
+    "backToHome": "Back to home"
+  },
+  "messages": {
+    "inbox": "Inbox",
+    "sent": "Sent",
+    "compose": "New message",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send",
+    "reply": "Reply",
+    "noMessages": "No messages"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Read more",
+    "publishedOn": "Published on {date}",
+    "noPosts": "No published posts"
+  },
+  "about": {
+    "title": "About us",
+    "subtitle": "Connecting families with the best extracurricular activities"
+  }
+}

@@ -1,0 +1,191 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
+import Image from 'next/image';
+import Link from 'next/link';
+
+interface Activity {
+  id: string;
+  title: string;
+  latitude: number | null;
+  longitude: number | null;
+  city: string;
+  price: number;
+  images: string[];
+  category: string;
+}
+
+interface GoogleMultipleMarkersMapProps {
+  activities: Activity[];
+  height?: string;
+}
+
+export default function GoogleMultipleMarkersMap({
+  activities,
+  height = '500px',
+}: GoogleMultipleMarkersMapProps) {
+  const mapDivRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<google.maps.Map | null>(null);
+  const markersRef = useRef<google.maps.Marker[]>([]);
+  const infoWindowRef = useRef<google.maps.InfoWindow | null>(null);
+
+  useEffect(() => {
+    const initMap = async () => {
+      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+      if (!apiKey) {
+        console.error('Google Maps API key no configurada');
+        return;
+      }
+
+      try {
+        // Configurar opciones de la API
+        setOptions({
+          key: apiKey,
+          v: 'weekly',
+          language: 'es',
+          region: 'ES',
+        });
+
+        // Importar librería de mapas
+        const mapsLib = await importLibrary('maps');
+
+        // Filtrar actividades con coordenadas válidas
+        const activitiesWithCoords = activities.filter(
+          (activity) => activity.latitude !== null && activity.longitude !== null
+        );
+
+        if (activitiesWithCoords.length === 0) {
+          console.warn('No hay actividades con coordenadas para mostrar');
+          return;
+        }
+
+        // Inicializar mapa si no existe
+        if (mapDivRef.current && !mapRef.current) {
+          // Centro de España (Madrid) por defecto
+          const SPAIN_CENTER = { lat: 40.4637, lng: -3.7492 };
+          
+          mapRef.current = new mapsLib.Map(mapDivRef.current, {
+            center: SPAIN_CENTER,
+            zoom: 6,
+            mapTypeControl: true,
+            streetViewControl: false,
+            fullscreenControl: true,
+            zoomControl: true,
+          });
+
+          // Crear un solo InfoWindow para reutilizar
+          infoWindowRef.current = new google.maps.InfoWindow();
+        }
+
+        // Limpiar marcadores anteriores
+        markersRef.current.forEach(marker => marker.setMap(null));
+        markersRef.current = [];
+
+        // Crear bounds para ajustar el zoom
+        const bounds = new google.maps.LatLngBounds();
+
+        // Crear marcadores para cada actividad
+        activitiesWithCoords.forEach((activity) => {
+          if (!activity.latitude || !activity.longitude || !mapRef.current) return;
+
+          const position = { lat: activity.latitude, lng: activity.longitude };
+          
+          // Extender bounds
+          bounds.extend(position);
+
+          // Crear marcador
+          const marker = new google.maps.Marker({
+            position,
+            map: mapRef.current,
+            title: activity.title,
+            animation: google.maps.Animation.DROP,
+          });
+
+          // Crear contenido del InfoWindow
+          const createInfoWindowContent = (act: Activity): HTMLDivElement => {
+            const container = document.createElement('div');
+            container.className = 'min-w-[250px] max-w-[300px]';
+            
+            container.innerHTML = `
+              <div class="p-2">
+                ${act.images[0] ? `
+                  <div class="relative w-full h-32 mb-2 rounded overflow-hidden">
+                    <img 
+                      src="${act.images[0]}" 
+                      alt="${act.title}"
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                ` : ''}
+                <h3 class="font-semibold text-sm mb-2 line-clamp-2">
+                  ${act.title}
+                </h3>
+                <p class="text-xs text-gray-600 mb-1">
+                  📍 ${act.city}
+                </p>
+                <p class="text-xs text-gray-600 mb-2">
+                  🏷️ ${act.category}
+                </p>
+                <div class="flex items-center justify-between">
+                  <span class="font-bold text-rose-600 text-sm">
+                    ${act.price}€/mes
+                  </span>
+                  <a
+                    href="/activity/${act.id}"
+                    class="text-xs bg-rose-500 text-white px-3 py-1.5 rounded hover:bg-rose-600 transition inline-block"
+                  >
+                    Ver detalles
+                  </a>
+                </div>
+              </div>
+            `;
+            
+            return container;
+          };
+
+          // Evento click en el marcador
+          marker.addListener('click', () => {
+            if (infoWindowRef.current && mapRef.current) {
+              infoWindowRef.current.setContent(createInfoWindowContent(activity));
+              infoWindowRef.current.open(mapRef.current, marker);
+            }
+          });
+
+          markersRef.current.push(marker);
+        });
+
+        // Ajustar el mapa para mostrar todos los marcadores
+        if (mapRef.current && activitiesWithCoords.length > 0) {
+          if (activitiesWithCoords.length === 1) {
+            // Si solo hay una actividad, centrar en ella con zoom 12
+            mapRef.current.setCenter(bounds.getCenter());
+            mapRef.current.setZoom(12);
+          } else {
+            // Si hay múltiples, ajustar bounds con padding
+            mapRef.current.fitBounds(bounds);
+          }
+        }
+
+      } catch (error) {
+        console.error('Error cargando Google Maps:', error);
+      }
+    };
+
+    initMap();
+
+    // Cleanup al desmontar
+    return () => {
+      markersRef.current.forEach(marker => marker.setMap(null));
+      markersRef.current = [];
+    };
+  }, [activities]);
+
+  return (
+    <div 
+      ref={mapDivRef}
+      style={{ height, width: '100%' }} 
+      className="rounded-lg overflow-hidden shadow-lg"
+    />
+  );
+}

@@ -1,0 +1,169 @@
+{
+  "common": {
+    "appName": "ExtraSchools",
+    "search": "Buscar",
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "register": "Registrarse",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "nav": {
+    "home": "Inicio",
+    "search": "Buscar actividades",
+    "blog": "Blog",
+    "about": "Sobre nosotros",
+    "dashboard": "Panel de empresa",
+    "admin": "Administración",
+    "profile": "Perfil",
+    "favorites": "Favoritos",
+    "messages": "Mensajes"
+  },
+  "home": {
+    "hero": {
+      "title": "Descubre las mejores actividades extraescolares",
+      "subtitle": "Conectamos a padres con empresas que ofrecen actividades increíbles para niños",
+      "cta": "Explorar actividades"
+    },
+    "features": {
+      "title": "¿Por qué ExtraSchools?",
+      "feature1": {
+        "title": "Amplia variedad",
+        "description": "Deportes, arte, música, idiomas y mucho más"
+      },
+      "feature2": {
+        "title": "Empresas verificadas",
+        "description": "Todas las empresas están verificadas y cuentan con reseñas reales"
+      },
+      "feature3": {
+        "title": "Fácil comunicación",
+        "description": "Contacta directamente con las empresas a través de nuestra plataforma"
+      }
+    }
+  },
+  "search": {
+    "title": "Buscar actividades",
+    "filters": {
+      "category": "Categoría",
+      "age": "Edad",
+      "city": "Ciudad",
+      "price": "Precio"
+    },
+    "categories": {
+      "all": "Todas",
+      "sports": "Deportes",
+      "arts": "Arte",
+      "music": "Música",
+      "languages": "Idiomas",
+      "stem": "STEM",
+      "other": "Otros"
+    },
+    "noResults": "No se encontraron actividades",
+    "results": "{count} actividades encontradas"
+  },
+  "activity": {
+    "details": "Detalles",
+    "description": "Descripción",
+    "age": "Edad recomendada",
+    "price": "Precio",
+    "location": "Ubicación",
+    "company": "Empresa",
+    "contact": "Contactar",
+    "addToFavorites": "Añadir a favoritos",
+    "removeFromFavorites": "Quitar de favoritos",
+    "reviews": "Reseñas",
+    "writeReview": "Escribir reseña",
+    "noReviews": "Aún no hay reseñas"
+  },
+  "company": {
+    "dashboard": "Panel de empresa",
+    "companyPortal": "Portal de Empresa",
+    "myActivities": "Mis actividades",
+    "addActivity": "Añadir actividad",
+    "editActivity": "Editar actividad",
+    "deleteActivity": "Eliminar actividad",
+    "messages": "Mensajes",
+    "subscription": "Suscripción",
+    "profile": "Perfil de empresa",
+    "backToSite": "Volver al sitio"
+  },
+  "auth": {
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signInTitle": "Iniciar sesión en tu cuenta",
+    "signUpTitle": "Crear una cuenta nueva",
+    "signInButton": "Iniciar sesión",
+    "signUpButton": "Crear cuenta",
+    "signingIn": "Iniciando sesión...",
+    "signingUp": "Creando cuenta...",
+    "email": "Email",
+    "password": "Contraseña",
+    "name": "Nombre",
+    "emailLabel": "Correo electrónico",
+    "passwordLabel": "Contraseña",
+    "nameLabel": "Nombre completo",
+    "confirmPasswordLabel": "Confirmar contraseña",
+    "emailPlaceholder": "tu@email.com",
+    "passwordPlaceholder": "Mínimo 6 caracteres",
+    "namePlaceholder": "Tu nombre completo",
+    "confirmPasswordPlaceholder": "Repite tu contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "signInLink": "Inicia sesión aquí",
+    "signUpLink": "Regístrate gratis",
+    "signInWith": "Iniciar sesión con {provider}",
+    "orContinueWith": "O continuar con",
+    "registerAsParent": "Registrarse como padre",
+    "registerAsCompany": "Registrarse como empresa",
+    "roleLabel": "¿Cómo quieres usar ExtraSchools?",
+    "parentRole": "Soy Padre/Madre",
+    "companyRole": "Soy Empresa",
+    "parentRoleDesc": "Busco actividades para mis hijos",
+    "companyRoleDesc": "Ofrezco actividades extraescolares",
+    "companyNameLabel": "Nombre de la empresa",
+    "companyNamePlaceholder": "Ej: ABC Deportes",
+    "companyPhoneLabel": "Teléfono de contacto",
+    "companyPhonePlaceholder": "+34 600 000 000",
+    "invalidCredentials": "Email o contraseña incorrectos",
+    "errorOccurred": "Ha ocurrido un error. Inténtalo de nuevo.",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "companyNameRequired": "El nombre de la empresa es obligatorio",
+    "demoCredentials": "Credenciales de prueba:",
+    "errorTitle": "Error de autenticación",
+    "errorConfiguration": "Hay un problema con la configuración del servidor.",
+    "errorAccessDenied": "No tienes permiso para acceder.",
+    "errorVerification": "El token de verificación ha expirado o ya fue usado.",
+    "errorDefault": "Ha ocurrido un error durante la autenticación.",
+    "backToSignIn": "Volver a iniciar sesión",
+    "backToHome": "Volver al inicio"
+  },
+  "messages": {
+    "inbox": "Bandeja de entrada",
+    "sent": "Enviados",
+    "compose": "Nuevo mensaje",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "send": "Enviar",
+    "reply": "Responder",
+    "noMessages": "No hay mensajes"
+  },
+  "blog": {
+    "title": "Blog",
+    "readMore": "Leer más",
+    "publishedOn": "Publicado el {date}",
+    "noPosts": "No hay artículos publicados"
+  },
+  "about": {
+    "title": "Sobre nosotros",
+    "subtitle": "Conectando familias con las mejores actividades extraescolares"
+  }
+}
