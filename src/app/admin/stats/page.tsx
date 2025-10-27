@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { BarChart3, TrendingUp, Users, Building2, FileText, Star, Heart, MessageSquare } from 'lucide-react';
+import { TrendingUp, Users, Building2, FileText, Star, Heart, MessageSquare } from 'lucide-react';
 
 async function getDetailedStats() {
   const now = new Date();

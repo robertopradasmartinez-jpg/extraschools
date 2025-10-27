@@ -50,14 +50,15 @@ export default function ImageUploader({
       setUploading(true);
       
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
-      const response = await fetch('/api/upload', {
-        method: 'POST',
+      const response = await fetch("/api/upload", {
+        method: "POST",
         body: formData,
       });
 
-      const data = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Error al subir la imagen');

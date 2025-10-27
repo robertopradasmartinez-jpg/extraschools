@@ -1,7 +1,13 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
-import { PlusCircle, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
+import {
+  Plus,
+  Edit,
+  Eye,
+  Search,
+  Filter,
+} from "lucide-react";
 import { formatPrice } from '@/lib/utils';
 import Image from 'next/image';
 import DeleteActivityButton from '@/components/company/DeleteActivityButton';

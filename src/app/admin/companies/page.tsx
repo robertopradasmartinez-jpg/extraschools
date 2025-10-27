@@ -7,7 +7,6 @@ import {
   Search,
   Trash2,
   ExternalLink,
-  Mail,
   Phone,
   Globe,
   ChevronLeft,

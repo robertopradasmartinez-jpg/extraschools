@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MessageSquare, Trash2, ChevronLeft, ChevronRight, User, Building2, Shield } from 'lucide-react';
+import { Trash2, ChevronLeft, ChevronRight, User, Building2, Shield } from 'lucide-react';
 
 interface Message {
   id: string;

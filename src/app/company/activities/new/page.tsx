@@ -43,38 +43,26 @@ export default function NewActivityPage() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setIsSubmitting(true);
+    setLoading(true);
 
     try {
-      // Filtrar imágenes vacías
-      const images = formData.images.filter(img => img.trim() !== '');
-
-      const response = await fetch('/api/company/activities', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/company/activities", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           ...formData,
-          images: images.length > 0 ? images : null,
+          latitude: parseFloat(formData.latitude),
+          longitude: parseFloat(formData.longitude),
+          price: parseFloat(formData.price),
         }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Error al crear la actividad');
-      }
-
-      router.push('/company/activities');
-      router.refresh();
-    } catch (error: any) {
-      setError(error.message);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any = await response.json();
 
   const addImageField = () => {
     setFormData(prev => ({

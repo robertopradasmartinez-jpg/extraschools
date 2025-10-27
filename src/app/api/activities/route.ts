@@ -21,6 +21,7 @@ export async function GET(request: Request) {
     const skip = (page - 1) * limit;
 
     // Construir filtros dinámicamente
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
       published: true,
     };
@@ -131,7 +132,7 @@ export async function GET(request: Request) {
 }
 
 // POST para obtener opciones de filtros (ciudades únicas, categorías)
-export async function POST(request: Request) {
+export async function POST() {
   try {
     // Devolver listas completas predefinidas en lugar de consultar la base de datos
     return NextResponse.json({

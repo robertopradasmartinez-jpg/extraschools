@@ -11,8 +11,6 @@ import {
   Heart,
   Share2,
   MessageSquare,
-  Clock,
-  Calendar,
 } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
 import { auth } from '@/lib/auth';

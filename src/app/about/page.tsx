@@ -1,5 +1,3 @@
-import { useTranslations } from 'next-intl'
-
 export default function AboutPage() {
   return (
     <div className="bg-white">
@@ -57,9 +55,9 @@ export default function AboutPage() {
             </ul>
 
             <div className="mt-12 p-8 bg-primary-50 border-l-4 border-primary-500 rounded-r-lg">
-              <p className="text-lg text-gray-700 font-medium italic">
-                "Si compartes estos valores, estás en el lugar adecuado."
-              </p>
+                        <p className="text-lg text-gray-700 leading-relaxed mb-4">
+            En ExtraSchools, creemos que &quot;cada niño tiene un talento único esperando a ser descubierto&quot;. Nuestra misión es conectar a las familias con las mejores actividades extraescolares de su ciudad.
+          </p>
             </div>
 
             <div className="mt-12 p-8 bg-secondary-50 rounded-lg">

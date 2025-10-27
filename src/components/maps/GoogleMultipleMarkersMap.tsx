@@ -1,9 +1,7 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useEffect, useRef } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
 
 interface Activity {
   id: string;

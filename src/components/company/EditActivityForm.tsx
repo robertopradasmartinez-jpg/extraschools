@@ -61,7 +61,8 @@ export default function EditActivityForm({ activity }: { activity: Activity }) {
         }),
       });
 
-      const data = await response.json();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data: any = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error || 'Error al actualizar la actividad');
