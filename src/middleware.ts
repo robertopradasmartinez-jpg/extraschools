@@ -1,14 +1,19 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import createMiddleware from 'next-intl/middleware';
 
-export function middleware(request: NextRequest) {
-  // Simplemente continúa con la petición
-  return NextResponse.next()
-}
+export default createMiddleware({
+  // Lista de locales soportadas
+  locales: ['es', 'en'],
+  
+  // Locale por defecto
+  defaultLocale: 'es',
+  
+  // No añadir el locale al path (mantener URLs limpias)
+  localePrefix: 'never'
+});
 
 export const config = {
   // Excluir rutas estáticas y API
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
-}
+};
