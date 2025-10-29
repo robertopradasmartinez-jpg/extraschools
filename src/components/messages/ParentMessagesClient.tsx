@@ -91,8 +91,6 @@ export default function ParentMessagesClient() {
     }
   }
 
-      }
-    );
   const unreadCount = messages.filter(m => !m.read && activeTab === 'received').length
 
   return (

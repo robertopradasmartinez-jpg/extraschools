@@ -43,26 +43,38 @@ export default function NewActivityPage() {
     }));
   };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
+    setError('');
 
     try {
-      const response = await fetch("/api/company/activities", {
-        method: "POST",
+      const response = await fetch('/api/company/activities', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
-          latitude: parseFloat(formData.latitude),
-          longitude: parseFloat(formData.longitude),
-          price: parseFloat(formData.price),
+          latitude: parseFloat(formData.latitude.toString()),
+          longitude: parseFloat(formData.longitude.toString()),
+          price: parseFloat(formData.price.toString()),
         }),
       });
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const data: any = await response.json();
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Error al crear la actividad');
+      }
+
+      router.push('/company/activities');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al crear la actividad');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const addImageField = () => {
     setFormData(prev => ({
