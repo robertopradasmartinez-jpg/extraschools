@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import {
   Plus,
+  PlusCircle,
   Edit,
   Eye,
   Search,

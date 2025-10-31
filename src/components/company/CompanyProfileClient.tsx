@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Building2, Mail, Phone, Globe, Star } from "lucide-react";
+import { Building2, Mail, Phone, Globe, Star, Calendar, AlertCircle } from "lucide-react";
 import CompanyProfileEditForm from './CompanyProfileEditForm';
 
 interface CompanyData {

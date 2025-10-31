@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
+import { Loader, setOptions, importLibrary } from "@googlemaps/js-api-loader";
 
 interface Activity {
   id: string;
