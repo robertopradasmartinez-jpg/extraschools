@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Loader, setOptions, importLibrary } from "@googlemaps/js-api-loader";
 
 interface Activity {
@@ -27,6 +27,7 @@ export default function GoogleMultipleMarkersMap({
   const mapRef = useRef<google.maps.Map | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
   const infoWindowRef = useRef<google.maps.InfoWindow | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initMap = async () => {
@@ -189,6 +190,10 @@ export default function GoogleMultipleMarkersMap({
 
       } catch (error) {
         console.error('Error cargando Google Maps:', error);
+        setIsLoading(false);
+      } finally {
+        // Marcar como cargado después de 500ms para que se vea el mapa
+        setTimeout(() => setIsLoading(false), 500);
       }
     };
 
@@ -202,10 +207,23 @@ export default function GoogleMultipleMarkersMap({
   }, [activities]);
 
   return (
-    <div 
-      ref={mapDivRef}
-      style={{ height, width: '100%' }} 
-      className="rounded-lg overflow-hidden shadow-lg"
-    />
+    <div className="relative" style={{ height, width: '100%' }}>
+      {isLoading && (
+        <div className="absolute inset-0 bg-white rounded-lg flex items-center justify-center z-10">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mb-4"></div>
+            <p className="text-gray-600 font-medium">Cargando mapa...</p>
+            <p className="text-sm text-gray-500 mt-1">
+              {activities.length} {activities.length === 1 ? 'actividad' : 'actividades'}
+            </p>
+          </div>
+        </div>
+      )}
+      <div 
+        ref={mapDivRef}
+        style={{ height: '100%', width: '100%' }} 
+        className="rounded-lg overflow-hidden shadow-lg"
+      />
+    </div>
   );
 }
