@@ -5,14 +5,23 @@ import { prisma } from '@/lib/prisma'
 import ActivityCard from '@/components/activities/ActivityCard'
 
 async function getFeaturedActivities() {
-  return await prisma.activity.findMany({
+  const allActivities = await prisma.activity.findMany({
     where: { published: true },
-    take: 6,
+    take: 20, // Traer más para compensar el filtrado
     orderBy: { createdAt: 'desc' },
     include: {
       company: {
-        include: {
-          user: true
+        select: {
+          name: true,
+          logo: true,
+          stripeSubscriptionId: true,
+          stripeCurrentPeriodEnd: true,
+          user: {
+            select: {
+              name: true,
+              email: true,
+            }
+          }
         }
       },
       reviews: {
@@ -21,7 +30,18 @@ async function getFeaturedActivities() {
         }
       }
     }
-  })
+  });
+
+  // Filtrar solo actividades de empresas con suscripción activa
+  const activeActivities = allActivities.filter(activity => {
+    if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
+      return false;
+    }
+    return new Date(activity.company.stripeCurrentPeriodEnd) > new Date();
+  });
+
+  // Tomar solo las primeras 6 después del filtrado
+  return activeActivities.slice(0, 6);
 }
 
 export default async function Home() {

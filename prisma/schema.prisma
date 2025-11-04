@@ -82,16 +82,20 @@ model VerificationToken {
 }
 
 model Company {
-  id               String     @id @default(cuid())
-  userId           String     @unique
-  name             String
-  description      String?
-  phone            String?
-  website          String?
-  logo             String?
-  whatsappEnabled  Boolean    @default(false)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  id                     String     @id @default(cuid())
+  userId                 String     @unique
+  name                   String
+  description            String?
+  phone                  String?
+  website                String?
+  logo                   String?
+  whatsappEnabled        Boolean    @default(false)
+  stripeCustomerId       String?    @unique
+  stripeSubscriptionId   String?    @unique
+  stripePriceId          String?
+  stripeCurrentPeriodEnd DateTime?
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
 
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   activities  Activity[]

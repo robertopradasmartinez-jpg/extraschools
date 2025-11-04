@@ -145,15 +145,6 @@ export default async function FavoritesPage() {
             </div>
           </>
         )}
-
-        {/* Info Box */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-900">
-            <strong>💡 Tip:</strong> Haz clic en el corazón de cualquier actividad para añadirla o
-            quitarla de tus favoritos. Tus favoritos se sincronizan automáticamente en todos tus
-            dispositivos.
-          </p>
-        </div>
       </div>
     </div>
   );

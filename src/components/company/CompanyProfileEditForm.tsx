@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Save, AlertCircle, CheckCircle2, Upload, X } from 'lucide-react';
+import { Save, AlertCircle, CheckCircle2 } from 'lucide-react';
+import ImageUploader from '@/components/admin/ImageUploader';
 
 interface CompanyData {
   id: string;
@@ -170,47 +171,17 @@ export default function CompanyProfileEditForm({ company, onCompanyUpdate }: Com
             </p>
           </div>
 
-          {/* Logo URL */}
+          {/* Logo */}
           <div className="md:col-span-2">
-            <label htmlFor="logo" className="block text-sm font-medium text-gray-700 mb-1">
-              URL del logo
-            </label>
-            <div className="flex space-x-2">
-              <input
-                type="url"
-                id="logo"
-                name="logo"
-                value={formData.logo}
-                onChange={handleChange}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://ejemplo.com/logo.png"
-              />
-              {formData.logo && (
-                <button
-                  type="button"
-                  onClick={() => setFormData(prev => ({ ...prev, logo: '' }))}
-                  className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600"
-                  title="Eliminar logo"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              URL de la imagen del logo de tu empresa (recomendado: 200x200px)
+            <ImageUploader
+              value={formData.logo}
+              onChange={(url) => setFormData(prev => ({ ...prev, logo: url }))}
+              label="Logo de la empresa"
+              maxSizeMB={2}
+            />
+            <p className="text-xs text-gray-500 mt-2">
+              Recomendado: imagen cuadrada de 200x200px o superior para mejor calidad
             </p>
-            {formData.logo && (
-              <div className="mt-2">
-                <img
-                  src={formData.logo}
-                  alt="Preview"
-                  className="w-20 h-20 rounded-lg object-cover border-2 border-gray-200"
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                  }}
-                />
-              </div>
-            )}
           </div>
 
           {/* Description */}

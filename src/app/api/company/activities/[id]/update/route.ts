@@ -21,6 +21,23 @@ export async function PUT(
       return NextResponse.json({ error: 'Empresa no encontrada' }, { status: 404 });
     }
 
+    // Verificar suscripción activa (excepto para admin)
+    if (session.user.role !== 'ADMIN') {
+      if (!company.stripeSubscriptionId || !company.stripeCurrentPeriodEnd) {
+        return NextResponse.json(
+          { error: 'Se requiere una suscripción activa para editar actividades' },
+          { status: 403 }
+        );
+      }
+
+      if (new Date(company.stripeCurrentPeriodEnd) <= new Date()) {
+        return NextResponse.json(
+          { error: 'Tu suscripción ha expirado. Por favor renuévala para continuar.' },
+          { status: 403 }
+        );
+      }
+    }
+
     const activity = await prisma.activity.findUnique({
       where: { id: params.id },
     });

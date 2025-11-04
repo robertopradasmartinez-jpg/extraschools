@@ -58,13 +58,32 @@ export default function GoogleMultipleMarkersMap({
           return;
         }
 
+        // Calcular el centro promedio de todas las actividades
+        const calculateCenter = () => {
+          if (activitiesWithCoords.length === 0) {
+            return { lat: 40.4637, lng: -3.7492 }; // Madrid por defecto
+          }
+          
+          const sum = activitiesWithCoords.reduce(
+            (acc, activity) => ({
+              lat: acc.lat + (activity.latitude || 0),
+              lng: acc.lng + (activity.longitude || 0),
+            }),
+            { lat: 0, lng: 0 }
+          );
+
+          return {
+            lat: sum.lat / activitiesWithCoords.length,
+            lng: sum.lng / activitiesWithCoords.length,
+          };
+        };
+
+        const centerPoint = calculateCenter();
+
         // Inicializar mapa si no existe
         if (mapDivRef.current && !mapRef.current) {
-          // Centro de España (Madrid) por defecto
-          const SPAIN_CENTER = { lat: 40.4637, lng: -3.7492 };
-          
           mapRef.current = new mapsLib.Map(mapDivRef.current, {
-            center: SPAIN_CENTER,
+            center: centerPoint,
             zoom: 6,
             mapTypeControl: true,
             streetViewControl: false,
@@ -125,13 +144,16 @@ export default function GoogleMultipleMarkersMap({
                 <p class="text-xs text-gray-600 mb-2">
                   🏷️ ${act.category}
                 </p>
-                <div class="flex items-center justify-between">
-                  <span class="font-bold text-rose-600 text-sm">
+                <div class="flex items-center justify-between mt-3">
+                  <span class="font-bold text-base" style="color: #4A90E2;">
                     ${act.price}€/mes
                   </span>
                   <a
                     href="/activity/${act.id}"
-                    class="text-xs bg-rose-500 text-white px-3 py-1.5 rounded hover:bg-rose-600 transition inline-block"
+                    class="text-sm text-white px-4 py-2 rounded transition inline-block font-medium"
+                    style="background-color: #4A90E2;"
+                    onmouseover="this.style.backgroundColor='#3b73b5'"
+                    onmouseout="this.style.backgroundColor='#4A90E2'"
                   >
                     Ver detalles
                   </a>

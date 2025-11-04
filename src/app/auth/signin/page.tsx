@@ -120,18 +120,6 @@ export default function SignInPage() {
             </button>
           </div>
         </form>
-
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-xs font-semibold text-blue-900 mb-2">
-            {t('demoCredentials')}
-          </p>
-          <div className="space-y-1 text-xs text-blue-800">
-            <p><strong>Admin:</strong> admin@extraschools.com / password123</p>
-            <p><strong>Padre:</strong> maria@example.com / password123</p>
-            <p><strong>Empresa:</strong> deportes@abc.com / password123</p>
-          </div>
-        </div>
       </div>
     </div>
   );

@@ -58,6 +58,15 @@ async function getActivity(id: string, userId?: string) {
     return null;
   }
 
+  // Verificar si la empresa tiene suscripción activa
+  if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
+    return null;
+  }
+  
+  if (new Date(activity.company.stripeCurrentPeriodEnd) <= new Date()) {
+    return null;
+  }
+
   return activity;
 }
 
