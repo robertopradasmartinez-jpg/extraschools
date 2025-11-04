@@ -186,14 +186,20 @@ export default function GoogleMultipleMarkersMap({
             // Si hay múltiples, ajustar bounds con padding
             mapRef.current.fitBounds(bounds);
           }
+          
+          // Esperar a que el mapa termine de ajustarse y los marcadores se rendericen
+          google.maps.event.addListenerOnce(mapRef.current, 'idle', () => {
+            // El mapa ha terminado de cargar y renderizar
+            setTimeout(() => setIsLoading(false), 300);
+          });
+        } else {
+          // Si no hay actividades con coordenadas, ocultar loading inmediatamente
+          setIsLoading(false);
         }
 
       } catch (error) {
         console.error('Error cargando Google Maps:', error);
         setIsLoading(false);
-      } finally {
-        // Marcar como cargado después de 500ms para que se vea el mapa
-        setTimeout(() => setIsLoading(false), 500);
       }
     };
 
