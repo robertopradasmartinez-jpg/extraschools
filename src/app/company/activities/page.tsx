@@ -14,6 +14,33 @@ import Image from 'next/image';
 import DeleteActivityButton from '@/components/company/DeleteActivityButton';
 import TogglePublishButton from '@/components/company/TogglePublishButton';
 
+// Tipo extendido para actividades con visualizaciones
+type ActivityWithViews = {
+  views?: number;
+} & {
+  favorites: { id: string; createdAt: Date; userId: string; activityId: string; }[];
+  reviews: { id: string; createdAt: Date; updatedAt: Date; userId: string; activityId: string; rating: number; comment: string | null; }[];
+} & {
+  id: string;
+  companyId: string;
+  title: string;
+  description: string;
+  category: string;
+  ageMin: number;
+  ageMax: number;
+  price: number;
+  address: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  latitude: number | null;
+  longitude: number | null;
+  images: string[];
+  published: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
 async function getCompanyActivities(userId: string) {
   const company = await prisma.company.findUnique({
     where: { userId },
@@ -29,6 +56,36 @@ async function getCompanyActivities(userId: string) {
       },
     },
   });
+
+  if (!company) return null;
+
+  // Obtener visualizaciones por actividad usando SQL crudo
+  const activityIds = company.activities.map(activity => activity.id);
+  
+  if (activityIds.length > 0) {
+    const viewsData = await prisma.$queryRaw<{activityId: string, count: bigint}[]>`
+      SELECT "activityId", COUNT(*) as count
+      FROM clicks 
+      WHERE "activityId" = ANY(${activityIds})
+      GROUP BY "activityId"
+    `;
+
+    // Convertir bigint a number y crear un mapa
+    const viewsMap = new Map(
+      viewsData.map(item => [item.activityId, Number(item.count)])
+    );
+
+    // Agregar visualizaciones a cada actividad
+    const activitiesWithViews = company.activities.map(activity => ({
+      ...activity,
+      views: viewsMap.get(activity.id) || 0
+    }));
+
+    return {
+      ...company,
+      activities: activitiesWithViews
+    };
+  }
 
   return company;
 }
@@ -153,8 +210,9 @@ export default async function CompanyActivitiesPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                       <div className="flex space-x-4">
-                        <span>❤️ {activity.favorites.length}</span>
-                        <span>⭐ {activity.reviews.length}</span>
+                        <span title="Visualizaciones">👁️ {(activity as any).views || 0}</span>
+                        <span title="Favoritos">❤️ {activity.favorites.length}</span>
+                        <span title="Reseñas">⭐ {activity.reviews.length}</span>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">

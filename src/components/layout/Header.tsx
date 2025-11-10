@@ -6,7 +6,6 @@ import { useSession, signOut } from 'next-auth/react'
 import { useTranslations } from 'next-intl'
 import { Menu, X, User, Heart, MessageSquare, LayoutDashboard } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
-import LanguageSwitcher from './LanguageSwitcher'
 
 export default function Header() {
   const { data: session } = useSession()
@@ -96,9 +95,6 @@ export default function Header() {
 
           {/* User Menu */}
           <div className="flex items-center space-x-2">
-            {/* Language Switcher */}
-            <LanguageSwitcher />
-
             {session ? (
               <>
                 <Link 

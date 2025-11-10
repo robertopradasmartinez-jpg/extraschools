@@ -10,7 +10,7 @@ Una plataforma web completa estilo Airbnb para conectar padres con empresas que 
 - 💬 **Mensajería interna** con notificaciones por email
 - ⭐ **Sistema de reseñas** y valoraciones
 - ❤️ **Favoritos** para padres registrados
-- 🌐 **Multiidioma** (Español e Inglés)
+- �🇸 **Interfaz en español**
 - 📝 **Blog** integrado
 - 🔐 **Autenticación** con NextAuth.js
 - 💳 **Stripe** configurado (para futuras integraciones)

@@ -73,7 +73,7 @@ Password: password123
 - ✅ Página de Blog
 - ✅ Página About
 - ✅ Base de datos completa con Prisma
-- ✅ Multiidioma (Español/Inglés) configurado
+- ✅ Interfaz completamente en español
 - ✅ 6 actividades de ejemplo cargadas
 - ✅ Sistema preparado para Google Maps
 - ✅ Sistema preparado para email notifications

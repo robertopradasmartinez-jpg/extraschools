@@ -2,8 +2,10 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Simplemente continúa con la petición
-  return NextResponse.next()
+  // Always use Spanish locale - no need for locale detection
+  const response = NextResponse.next();
+  response.headers.set('x-locale', 'es');
+  return response;
 }
 
 export const config = {

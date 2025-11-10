@@ -34,6 +34,7 @@ model User {
   reviews       Review[]
   sentMessages  Message[]  @relation("SentMessages")
   receivedMessages Message[] @relation("ReceivedMessages")
+  clicks        Click[]
 
   @@map("users")
 }
@@ -127,6 +128,7 @@ model Activity {
   favorites   Favorite[]
   reviews     Review[]
   messages    Message[]  @relation("MessageActivity")
+  clicks      Click[]
 
   @@map("activities")
 }
@@ -190,4 +192,20 @@ model BlogPost {
   updatedAt   DateTime @updatedAt
 
   @@map("blog_posts")
+}
+
+model Click {
+  id         String   @id @default(cuid())
+  activityId String
+  userId     String?  // Opcional, para usuarios autenticados
+  sessionId  String?  // Para usuarios anónimos
+  userAgent  String?
+  ipAddress  String?
+  referrer   String?
+  createdAt  DateTime @default(now())
+
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("clicks")
 }

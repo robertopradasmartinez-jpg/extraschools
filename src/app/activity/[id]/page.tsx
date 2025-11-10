@@ -76,7 +76,8 @@ export default async function ActivityDetailPage({
   params: { id: string };
 }) {
   const session = await auth();
-  const activity = await getActivity(params.id, session?.user.id);
+  const { id } = await params;
+  const activity = await getActivity(id, session?.user.id);
 
   if (!activity) {
     notFound();

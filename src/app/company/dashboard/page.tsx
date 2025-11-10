@@ -48,6 +48,39 @@ async function getCompanyStats(userId: string) {
     },
   });
 
+  // Obtener estadísticas de visualizaciones de las actividades de la empresa
+  const activityIds = company.activities.map(a => a.id);
+  
+  // Visualizaciones totales de todas las actividades de la empresa
+  const totalClicks = await prisma.$queryRaw<[{ count: bigint }]>`
+    SELECT COUNT(*) as count 
+    FROM clicks 
+    WHERE "activityId" = ANY(${activityIds})
+  `.then(result => Number(result[0]?.count || 0)).catch(() => 0);
+
+  // Visualizaciones del mes actual
+  const startOfMonth = new Date();
+  startOfMonth.setDate(1);
+  startOfMonth.setHours(0, 0, 0, 0);
+  
+  const monthlyClicks = await prisma.$queryRaw<[{ count: bigint }]>`
+    SELECT COUNT(*) as count 
+    FROM clicks 
+    WHERE "activityId" = ANY(${activityIds})
+    AND "createdAt" >= ${startOfMonth}
+  `.then(result => Number(result[0]?.count || 0)).catch(() => 0);
+
+  // Obtener visualizaciones por actividad (top 5)
+  const clicksByActivity = await prisma.$queryRaw<Array<{ activityId: string; count: bigint }>>`
+    SELECT "activityId", COUNT(*) as count
+    FROM clicks 
+    WHERE "activityId" = ANY(${activityIds})
+    GROUP BY "activityId"
+    ORDER BY count DESC
+    LIMIT 5
+  `.then(result => result.map(r => ({ activityId: r.activityId, count: Number(r.count) })))
+    .catch(() => []);
+
   return {
     company,
     stats: {
@@ -57,6 +90,9 @@ async function getCompanyStats(userId: string) {
       totalFavorites,
       avgRating,
       unreadMessages,
+      totalClicks,
+      monthlyClicks,
+      clicksByActivity,
     },
   };
 }
@@ -95,9 +131,9 @@ export default async function CompanyDashboardPage() {
       color: 'bg-blue-500',
     },
     {
-      name: 'Clics Totales',
-      value: '0', // TODO: Implementar tracking de clics
-      subtext: 'Este mes',
+      name: 'Visualizaciones',
+      value: stats.totalClicks,
+      subtext: `${stats.monthlyClicks} este mes`,
       icon: Eye,
       color: 'bg-primary-500',
     },
@@ -232,6 +268,47 @@ export default async function CompanyDashboardPage() {
                 <p className="text-sm text-gray-600">Mensajes sin leer</p>
               </div>
             </div>
+          </div>
+
+          {/* View Analytics Card */}
+          <div className="bg-white rounded-lg shadow p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold text-gray-900">Análisis de Visualizaciones</h2>
+            </div>
+            {stats.clicksByActivity.length === 0 ? (
+              <div className="text-center py-8">
+                <Eye className="w-12 h-12 text-gray-400 mx-auto mb-2" />
+                <p className="text-gray-600">Aún no hay visualizaciones registradas</p>
+                <p className="text-sm text-gray-500 mt-1">
+                  Las visualizaciones se mostrarán cuando los usuarios visiten tus actividades
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div className="text-center mb-4">
+                  <p className="text-2xl font-bold text-gray-900">{stats.totalClicks}</p>
+                  <p className="text-sm text-gray-600">Visualizaciones totales</p>
+                </div>
+                <div className="border-t pt-4">
+                  <p className="text-sm font-medium text-gray-700 mb-3">Actividades más vistas:</p>
+                  {stats.clicksByActivity.map((stat) => {
+                    const activity = company.activities.find(a => a.id === stat.activityId);
+                    return activity ? (
+                      <div key={stat.activityId} className="flex items-center justify-between py-2">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900 text-sm truncate">{activity.title}</p>
+                          <p className="text-xs text-gray-500">{activity.category}</p>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Eye className="w-4 h-4 text-gray-400" />
+                          <span className="font-medium text-gray-900">{stat.count}</span>
+                        </div>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

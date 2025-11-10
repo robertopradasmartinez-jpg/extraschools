@@ -1,10 +1,8 @@
 import { getRequestConfig } from 'next-intl/server';
-import { cookies } from 'next/headers';
 
 export default getRequestConfig(async () => {
-  // Read locale from cookie, default to 'es'
-  const cookieStore = await cookies();
-  const locale = cookieStore.get('NEXT_LOCALE')?.value || 'es';
+  // Always use Spanish locale
+  const locale = 'es';
 
   return {
     locale,

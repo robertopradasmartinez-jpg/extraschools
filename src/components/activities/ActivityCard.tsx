@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Heart, MapPin, Star } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
+import { useViewTracking } from '@/lib/viewTracking'
 
 interface ActivityCardProps {
   id: string
@@ -32,10 +33,18 @@ export default function ActivityCard({
   isFavorite = false,
   onToggleFavorite,
 }: ActivityCardProps) {
+  const { trackView } = useViewTracking()
+
+  const handleActivityClick = async () => {
+    // Trackear la visualización antes de navegar
+    await trackView(id)
+  }
+
+  // Always use Spanish text directly - no translation needed
   return (
     <div className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100">
       {/* Image */}
-      <Link href={`/activity/${id}`}>
+      <Link href={`/activity/${id}`} onClick={handleActivityClick}>
         <div className="relative aspect-[4/3] overflow-hidden">
           <Image
             src={images[0] || '/placeholder-activity.jpg'}
