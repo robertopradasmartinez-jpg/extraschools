@@ -58,14 +58,15 @@ async function getActivity(id: string, userId?: string) {
     return null;
   }
 
+  // TODO: Reactivar validación de suscripción cuando Stripe esté configurado
   // Verificar si la empresa tiene suscripción activa
-  if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
-    return null;
-  }
+  // if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
+  //   return null;
+  // }
   
-  if (new Date(activity.company.stripeCurrentPeriodEnd) <= new Date()) {
-    return null;
-  }
+  // if (new Date(activity.company.stripeCurrentPeriodEnd) <= new Date()) {
+  //   return null;
+  // }
 
   return activity;
 }
