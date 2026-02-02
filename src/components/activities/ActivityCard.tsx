@@ -74,7 +74,7 @@ export default function ActivityCard({
       )}
 
       {/* Content */}
-      <Link href={`/activities/${id}`}>
+      <Link href={`/activity/${id}`} onClick={handleActivityClick}>
         <div className="p-4">
           {/* Location & Rating */}
           <div className="flex items-center justify-between mb-2">
