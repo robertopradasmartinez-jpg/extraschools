@@ -19,6 +19,10 @@ import ActivityMapSection from '@/components/maps/ActivityMapSection';
 import ContactButton from '@/components/messages/ContactButton';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
 
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 async function getActivity(id: string, userId?: string) {
   const activity = await prisma.activity.findUnique({
     where: { id },

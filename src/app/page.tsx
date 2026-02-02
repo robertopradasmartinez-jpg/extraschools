@@ -4,6 +4,10 @@ import { Search, Shield, MessageCircle } from 'lucide-react'
 import { prisma } from '@/lib/prisma'
 import ActivityCard from '@/components/activities/ActivityCard'
 
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 async function getFeaturedActivities() {
   const allActivities = await prisma.activity.findMany({
     where: { published: true },

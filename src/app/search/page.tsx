@@ -1,6 +1,10 @@
 import SearchPageClient from '@/components/search/SearchPageClient'
 import { Suspense } from 'react'
 
+// Force dynamic rendering to always fetch fresh data
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default function SearchPage() {
   return (
     <div className="bg-gray-50 min-h-screen relative z-0">
