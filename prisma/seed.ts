@@ -50,6 +50,10 @@ async function main() {
   })
 
   // Company users
+  // Fecha de suscripción: 1 año desde ahora
+  const subscriptionEndDate = new Date()
+  subscriptionEndDate.setFullYear(subscriptionEndDate.getFullYear() + 1)
+
   const companyUser1 = await prisma.user.create({
     data: {
       name: 'Academia Deportiva ABC',
@@ -62,6 +66,10 @@ async function main() {
           description: 'Especialistas en deportes para niños desde 1995. Ofrecemos fútbol, baloncesto, natación y más.',
           phone: '+34 612 345 678',
           website: 'https://deportesabc.com',
+          stripeCustomerId: 'cus_demo_1',
+          stripeSubscriptionId: 'sub_demo_1',
+          stripePriceId: 'price_demo_1',
+          stripeCurrentPeriodEnd: subscriptionEndDate,
         },
       },
     },
@@ -79,6 +87,10 @@ async function main() {
           description: 'Enseñanza musical de calidad para todas las edades. Piano, guitarra, violín y más.',
           phone: '+34 623 456 789',
           website: 'https://armonia.com',
+          stripeCustomerId: 'cus_demo_2',
+          stripeSubscriptionId: 'sub_demo_2',
+          stripePriceId: 'price_demo_2',
+          stripeCurrentPeriodEnd: subscriptionEndDate,
         },
       },
     },
@@ -96,6 +108,10 @@ async function main() {
           description: 'Clases de pintura, escultura y artes plásticas para desarrollar la creatividad infantil.',
           phone: '+34 634 567 890',
           website: 'https://arteniños.com',
+          stripeCustomerId: 'cus_demo_3',
+          stripeSubscriptionId: 'sub_demo_3',
+          stripePriceId: 'price_demo_3',
+          stripeCurrentPeriodEnd: subscriptionEndDate,
         },
       },
     },
