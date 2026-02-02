@@ -32,16 +32,17 @@ async function getFeaturedActivities() {
     }
   });
 
+  // TODO: Reactivar validación de suscripción cuando Stripe esté configurado
   // Filtrar solo actividades de empresas con suscripción activa
-  const activeActivities = allActivities.filter(activity => {
-    if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
-      return false;
-    }
-    return new Date(activity.company.stripeCurrentPeriodEnd) > new Date();
-  });
+  // const activeActivities = allActivities.filter(activity => {
+  //   if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
+  //     return false;
+  //   }
+  //   return new Date(activity.company.stripeCurrentPeriodEnd) > new Date();
+  // });
 
-  // Tomar solo las primeras 6 después del filtrado
-  return activeActivities.slice(0, 6);
+  // Tomar solo las primeras 6 (sin filtrar por suscripción)
+  return allActivities.slice(0, 6);
 }
 
 export default async function Home() {
