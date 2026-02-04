@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExtraSchools - Test Favicon</title>
+    
+    <!-- Standard favicon -->
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png?v=2">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/apple-touch-icon.png?v=2">
+    
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/public/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/public/android-chrome-512x512.png">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/public/site.webmanifest">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#00A3FF">
+    <meta name="msapplication-TileColor" content="#00A3FF">
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #00A3FF 0%, #00E68A 100%);
+            color: white;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #00A3FF;
+        }
+        .icon-preview {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .icon-item {
+            text-align: center;
+        }
+        .icon-item img {
+            display: block;
+            margin: 0 auto 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border-left: 4px solid #00A3FF;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #00A3FF;
+        }
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Test de Favicon - ExtraSchools</h1>
+        <p>Esta página te ayuda a verificar que el favicon se muestra correctamente en Safari y otros navegadores.</p>
+        
+        <div class="icon-preview">
+            <div class="icon-item">
+                <img src="/public/favicon-16x16.png" alt="16x16" width="16" height="16">
+                <small>16x16</small>
+            </div>
+            <div class="icon-item">
+                <img src="/public/favicon-32x32.png" alt="32x32" width="32" height="32">
+                <small>32x32</small>
+            </div>
+            <div class="icon-item">
+                <img src="/public/apple-touch-icon.png" alt="Apple" width="64" height="64">
+                <small>Apple Touch</small>
+            </div>
+            <div class="icon-item">
+                <img src="/public/android-chrome-192x192.png" alt="Android" width="64" height="64">
+                <small>Android 192</small>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 Instrucciones para limpiar caché en Safari:</h3>
+            <ol>
+                <li><strong>Opción 1 - Borrar caché del sitio:</strong>
+                    <ul>
+                        <li>Safari → Configuración → Privacidad → Gestionar datos de sitios web</li>
+                        <li>Buscar "localhost" o tu dominio</li>
+                        <li>Eliminar y recargar</li>
+                    </ul>
+                </li>
+                <li><strong>Opción 2 - Borrar todo el caché:</strong>
+                    <ul>
+                        <li>Safari → Configuración → Avanzado</li>
+                        <li>Marcar "Mostrar menú Desarrollo"</li>
+                        <li>Menú Desarrollo → Vaciar cachés (⌥⌘E)</li>
+                    </ul>
+                </li>
+                <li><strong>Opción 3 - Forzar recarga completa:</strong>
+                    <ul>
+                        <li>Mantén pulsado ⌘⇧R (Command + Shift + R)</li>
+                        <li>O cierra Safari completamente y vuelve a abrirlo</li>
+                    </ul>
+                </li>
+                <li><strong>Opción 4 - Eliminar marcador:</strong>
+                    <ul>
+                        <li>Si tienes el sitio en marcadores, elimínalo</li>
+                        <li>El favicon se cachea también en marcadores</li>
+                        <li>Vuelve a agregarlo después de limpiar</li>
+                    </ul>
+                </li>
+            </ol>
+            
+            <h3>✅ Verifica que el favicon se ve:</h3>
+            <ul>
+                <li>En la pestaña del navegador (arriba a la izquierda)</li>
+                <li>En los marcadores/favoritos</li>
+                <li>En el historial</li>
+                <li>En la pantalla de inicio (móvil)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

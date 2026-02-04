@@ -130,7 +130,7 @@ export default async function PublicCompanyProfilePage({
                   className="w-32 h-32 rounded-lg object-cover border-2 border-gray-200"
                 />
               ) : (
-                <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-lg bg-gradient-to-br from-blue-400 to-green-500 flex items-center justify-center">
                   <Building2 className="w-16 h-16 text-white" />
                 </div>
               )}

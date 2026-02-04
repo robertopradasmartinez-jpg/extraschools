@@ -44,7 +44,7 @@ export default function CompanyProfileClient({ initialCompany }: CompanyProfileC
                 className="w-24 h-24 rounded-lg object-cover border-2 border-gray-200"
               />
             ) : (
-              <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-lg bg-gradient-to-br from-blue-400 to-green-500 flex items-center justify-center">
                 <Building2 className="w-12 h-12 text-white" />
               </div>
             )}
