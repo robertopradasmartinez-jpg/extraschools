@@ -7,14 +7,14 @@ export const revalidate = 0;
 
 export default function SearchPage() {
   return (
-    <div className="bg-gray-50 min-h-screen relative z-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen relative z-0">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Buscar actividades extraescolares
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent mb-3">
+            Buscar Actividades
           </h1>
-          <p className="text-gray-600">
+          <p className="text-lg text-gray-600 font-medium">
             Encuentra la actividad perfecta para tus hijos
           </p>
         </div>

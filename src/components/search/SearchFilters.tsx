@@ -94,14 +94,16 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
     filters.search
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+    <div className="card border-2 border-gray-100">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <SlidersHorizontal className="w-5 h-5 text-gray-600" />
-          <h2 className="text-lg font-semibold text-gray-900">Filtros</h2>
+      <div className="flex items-center justify-between p-5 border-b border-gray-100">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl">
+            <SlidersHorizontal className="w-5 h-5 text-white" />
+          </div>
+          <h2 className="text-xl font-black text-gray-900">Filtros</h2>
           {hasActiveFilters && (
-            <span className="bg-secondary-100 text-primary-600 text-xs font-medium px-2 py-1 rounded-full">
+            <span className="bg-gradient-to-r from-primary-500 to-secondary-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">
               Activos
             </span>
           )}
@@ -110,14 +112,14 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
           {hasActiveFilters && (
             <button
               onClick={clearFilters}
-              className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+              className="text-sm text-secondary-500 hover:text-secondary-600 font-bold hover:underline"
             >
               Limpiar todo
             </button>
           )}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg"
+            className="lg:hidden p-2.5 hover:bg-blue-50 rounded-xl transition"
           >
             {showFilters ? <X className="w-5 h-5" /> : <SlidersHorizontal className="w-5 h-5" />}
           </button>
@@ -129,30 +131,30 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Search */}
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Buscar
             </label>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-primary-500" />
               <input
                 type="text"
                 value={filters.search}
                 onChange={(e) => handleFilterChange('search', e.target.value)}
                 placeholder="Título o descripción..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
               />
             </div>
           </div>
 
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Categoría
             </label>
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange('category', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             >
               <option value="all">Todas</option>
               {categories.map(cat => (
@@ -163,13 +165,13 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
 
           {/* City */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Ciudad
             </label>
             <select
               value={filters.city}
               onChange={(e) => handleFilterChange('city', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             >
               <option value="all">Todas</option>
               {cities.map(city => (
@@ -180,7 +182,7 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
 
           {/* Age Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Edad mínima
             </label>
             <input
@@ -190,12 +192,12 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               placeholder="Ej: 6"
               min="3"
               max="18"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Edad máxima
             </label>
             <input
@@ -205,13 +207,13 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               placeholder="Ej: 12"
               min="3"
               max="18"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>
 
           {/* Price Range */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Precio mínimo (€/mes)
             </label>
             <input
@@ -221,12 +223,12 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               placeholder="Ej: 30"
               min="0"
               step="5"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-bold text-gray-900 mb-2">
               Precio máximo (€/mes)
             </label>
             <input
@@ -236,7 +238,7 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               placeholder="Ej: 100"
               min="0"
               step="5"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>
         </div>

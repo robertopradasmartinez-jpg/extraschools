@@ -27,7 +27,7 @@ export default function SearchPageClient() {
   // Initialize filters from URL params on mount
   const getInitialFilters = (): FilterState => {
     return {
-      search: searchParams.get('search') || '',
+      search: searchParams.get('search') || searchParams.get('q') || '',
       category: searchParams.get('category') || 'all',
       city: searchParams.get('city') || 'all',
       ageMin: searchParams.get('ageMin') || '',
