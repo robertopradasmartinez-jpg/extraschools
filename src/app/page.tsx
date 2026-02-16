@@ -200,6 +200,8 @@ export default async function Home() {
                     title={activity.title}
                     description={activity.description}
                     price={activity.price}
+                    priceType={activity.priceType}
+                    priceTypeCustom={activity.priceTypeCustom}
                     city={activity.city}
                     images={activity.images}
                     category={activity.category}

@@ -9,7 +9,7 @@ import {
   Search,
   Filter,
 } from "lucide-react";
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getPriceTypeLabel } from '@/lib/utils';
 import Image from 'next/image';
 import DeleteActivityButton from '@/components/company/DeleteActivityButton';
 import TogglePublishButton from '@/components/company/TogglePublishButton';
@@ -200,7 +200,7 @@ export default async function CompanyActivitiesPage() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {formatPrice(activity.price)}
+                      {formatPrice(activity.price)}{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <TogglePublishButton 

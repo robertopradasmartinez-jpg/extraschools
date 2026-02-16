@@ -12,7 +12,7 @@ import {
   Share2,
   MessageSquare,
 } from 'lucide-react';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice, getPriceTypeLabel } from '@/lib/utils';
 import { auth } from '@/lib/auth';
 import AddToFavoritesButton from '@/components/activities/AddToFavoritesButton';
 import ActivityMapSection from '@/components/maps/ActivityMapSection';
@@ -206,7 +206,7 @@ export default async function ActivityDetailPage({
                   <Euro className="w-5 h-5 mx-auto mb-1 text-gray-600" />
                   <p className="text-xs text-gray-600">Precio</p>
                   <p className="font-semibold text-gray-900">
-                    {formatPrice(activity.price)}
+                    {formatPrice(activity.price)}{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}
                   </p>
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
@@ -265,7 +265,7 @@ export default async function ActivityDetailPage({
                     <span className="text-3xl font-bold text-gray-900">
                       {formatPrice(activity.price)}
                     </span>
-                    <span className="text-gray-600 ml-2">/mes</span>
+                    <span className="text-gray-600 ml-2">{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}</span>
                   </div>
                 </div>
 

@@ -11,6 +11,8 @@ interface Activity {
   title: string
   description: string
   price: number
+  priceType?: string
+  priceTypeCustom?: string
   city: string
   images: string[]
   category: string
@@ -150,6 +152,8 @@ export default function SearchResults({
             title={activity.title}
             description={activity.description}
             price={activity.price}
+            priceType={activity.priceType}
+            priceTypeCustom={activity.priceTypeCustom}
             city={activity.city}
             images={activity.images}
             category={activity.category}

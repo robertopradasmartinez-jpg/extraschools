@@ -358,19 +358,6 @@ export default function GoogleMapsLocationPicker({
         className="w-full h-80 bg-gray-100 rounded-lg border border-gray-300 overflow-hidden"
       />
 
-      {/* Info */}
-      <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
-        <p className="font-medium text-blue-900 mb-1">💡 Sobre Google Maps API</p>
-        <p className="text-blue-800 text-xs">
-          Para usar el geocoding, necesitas una API Key de Google Maps. Los datos de ubicación
-          se usarán después con Leaflet para mostrar el mapa interactivo a los usuarios.
-        </p>
-        {!process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY && (
-          <p className="text-orange-600 text-xs mt-2 font-medium">
-            ⚠️ API Key no detectada. Añade NEXT_PUBLIC_GOOGLE_MAPS_API_KEY a tu .env
-          </p>
-        )}
-      </div>
     </div>
   );
 }

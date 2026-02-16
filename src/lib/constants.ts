@@ -52,6 +52,17 @@ export const SPANISH_CITIES = [
   'Zaragoza'
 ].sort();
 
+// Tipos de precio disponibles
+export const PRICE_TYPES = [
+  { value: 'mes', label: '/mes' },
+  { value: 'hora', label: '/hora' },
+  { value: 'clase', label: '/clase' },
+  { value: 'semana', label: '/semana' },
+  { value: 'otro', label: '' },
+] as const;
+
+export type PriceType = typeof PRICE_TYPES[number]['value'];
+
 // Lista completa de categorías de actividades extraescolares
 export const ACTIVITY_CATEGORIES = [
   'Arte',

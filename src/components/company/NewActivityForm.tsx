@@ -6,7 +6,7 @@ import { ArrowLeft, Save, MapPin } from 'lucide-react';
 import Link from 'next/link';
 import GoogleMapsLocationPicker from '@/components/company/GoogleMapsLocationPicker';
 import ImageUploader from '@/components/admin/ImageUploader';
-import { ACTIVITY_CATEGORIES, SPANISH_CITIES } from '@/lib/constants';
+import { ACTIVITY_CATEGORIES, SPANISH_CITIES, PRICE_TYPES } from '@/lib/constants';
 
 export default function NewActivityForm() {
   const router = useRouter();
@@ -19,6 +19,8 @@ export default function NewActivityForm() {
     ageMin: 4,
     ageMax: 18,
     price: 0,
+    priceType: 'mes',
+    priceTypeCustom: '',
     address: '',
     city: '',
     province: '',
@@ -172,7 +174,7 @@ export default function NewActivityForm() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Precio (€/mes) *
+                Precio (€) *
               </label>
               <input
                 type="number"
@@ -183,6 +185,34 @@ export default function NewActivityForm() {
                 onChange={(e) => setFormData({ ...formData, price: parseFloat(e.target.value) })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Tipo de precio *
+              </label>
+              <select
+                required
+                value={formData.priceType}
+                onChange={(e) => setFormData({ ...formData, priceType: e.target.value })}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+                {PRICE_TYPES.map((pt) => (
+                  <option key={pt.value} value={pt.value}>
+                    {pt.value === 'otro' ? 'Otro (especificar)' : `Por ${pt.value}`}
+                  </option>
+                ))}
+              </select>
+              {formData.priceType === 'otro' && (
+                <input
+                  type="text"
+                  required
+                  value={formData.priceTypeCustom}
+                  onChange={(e) => setFormData({ ...formData, priceTypeCustom: e.target.value })}
+                  placeholder="Ej: trimestre, curso, sesión..."
+                  className="w-full mt-2 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                />
+              )}
             </div>
 
             <div>

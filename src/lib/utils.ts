@@ -12,6 +12,17 @@ export function formatPrice(price: number): string {
   }).format(price)
 }
 
+export function getPriceTypeLabel(priceType: string, customLabel?: string): string {
+  switch (priceType) {
+    case 'mes': return '/mes';
+    case 'hora': return '/hora';
+    case 'clase': return '/clase';
+    case 'semana': return '/semana';
+    case 'otro': return customLabel ? `/${customLabel}` : '';
+    default: return '/mes';
+  }
+}
+
 export function formatDate(date: Date | string): string {
   return new Intl.DateTimeFormat('es-ES', {
     year: 'numeric',

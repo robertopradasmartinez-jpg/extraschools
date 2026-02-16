@@ -26,6 +26,8 @@ interface Activity {
   longitude: number | null;
   city: string;
   price: number;
+  priceType?: string;
+  priceTypeCustom?: string;
   images: string[];
   category: string;
 }
@@ -89,7 +91,7 @@ export default function MultipleMarkersMap({
                 </p>
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-primary-600">
-                    {activity.price}€/mes
+                    {activity.price}€{activity.priceType === 'otro' ? `/${activity.priceTypeCustom || ''}` : `/${activity.priceType || 'mes'}`}
                   </span>
                   <Link
                     href={`/activity/${activity.id}`}

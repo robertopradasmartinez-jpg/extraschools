@@ -113,6 +113,8 @@ model Activity {
   ageMin      Int
   ageMax      Int
   price       Float
+  priceType   String   @default("mes")
+  priceTypeCustom String @default("")
   address     String
   city        String
   province    String

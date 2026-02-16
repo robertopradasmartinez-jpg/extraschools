@@ -249,6 +249,8 @@ export default async function PublicCompanyProfilePage({
                   title={activity.title}
                   description={activity.description}
                   price={activity.price}
+                  priceType={(activity as any).priceType}
+                  priceTypeCustom={(activity as any).priceTypeCustom}
                   city={activity.city}
                   images={activity.images}
                   category={activity.category}

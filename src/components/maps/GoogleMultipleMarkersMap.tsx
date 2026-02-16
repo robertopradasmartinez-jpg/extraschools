@@ -10,6 +10,8 @@ interface Activity {
   longitude: number | null;
   city: string;
   price: number;
+  priceType?: string;
+  priceTypeCustom?: string;
   images: string[];
   category: string;
 }
@@ -147,7 +149,7 @@ export default function GoogleMultipleMarkersMap({
                 </p>
                 <div class="flex items-center justify-between mt-3">
                   <span class="font-bold text-base" style="color: #4A90E2;">
-                    ${act.price}€/mes
+                    ${act.price}€${act.priceType === 'otro' ? `/${act.priceTypeCustom || ''}` : `/${act.priceType || 'mes'}`}
                   </span>
                   <a
                     href="/activity/${act.id}"

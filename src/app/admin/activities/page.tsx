@@ -272,7 +272,7 @@ export default function AdminActivitiesPage() {
                         {activity._count.reviews}
                       </div>
                       <div className="flex-1 text-right font-bold text-gray-900">
-                        €{activity.price}/mes
+                        €{activity.price}{(activity as any).priceType === 'otro' ? `/${(activity as any).priceTypeCustom || ''}` : `/${(activity as any).priceType || 'mes'}`}
                       </div>
                     </div>
 

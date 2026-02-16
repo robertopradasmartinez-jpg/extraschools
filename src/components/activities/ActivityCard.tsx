@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Heart, MapPin, Star } from 'lucide-react'
-import { formatPrice } from '@/lib/utils'
+import { formatPrice, getPriceTypeLabel } from '@/lib/utils'
 import { useViewTracking } from '@/lib/viewTracking'
 
 interface ActivityCardProps {
@@ -11,6 +11,8 @@ interface ActivityCardProps {
   title: string
   description: string
   price: number
+  priceType?: string
+  priceTypeCustom?: string
   city: string
   images: string[]
   category: string
@@ -25,6 +27,8 @@ export default function ActivityCard({
   title,
   description,
   price,
+  priceType = 'mes',
+  priceTypeCustom = '',
   city,
   images,
   category,
@@ -106,7 +110,7 @@ export default function ActivityCard({
             <span className="text-2xl font-black bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
               {formatPrice(price)}
             </span>
-            <span className="text-sm text-gray-500 ml-2 font-semibold">/mes</span>
+            <span className="text-sm text-gray-500 ml-2 font-semibold">{getPriceTypeLabel(priceType, priceTypeCustom)}</span>
           </div>
         </div>
       </Link>
