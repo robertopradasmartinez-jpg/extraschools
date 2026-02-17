@@ -39,6 +39,107 @@ export default function GoogleMapsLocationPicker({
   const markerRef = useRef<any>(null);
   const mapDivRef = useRef<HTMLDivElement>(null);
 
+  // Manejar cuando el usuario arrastra y suelta el marcador
+  const handleMarkerDragEnd = useCallback(async (event: google.maps.MapMouseEvent) => {
+    if (!event.latLng || !geocoderRef.current) return;
+
+    const newLat = event.latLng.lat();
+    const newLng = event.latLng.lng();
+
+    console.log('📍 Marcador movido a:', newLat, newLng);
+    setIsSearching(true);
+
+    try {
+      // Hacer geocoding reverso para obtener la dirección
+      geocoderRef.current.geocode(
+        { location: { lat: newLat, lng: newLng } },
+        (results, status) => {
+          if (status === google.maps.GeocoderStatus.OK && results && results[0]) {
+            const result = results[0];
+
+            // Extraer componentes de dirección
+            const components = result.address_components;
+            let city = '';
+            let province = '';
+            let postalCode = '';
+
+            components.forEach((component) => {
+              if (component.types.includes('locality')) {
+                city = component.long_name;
+              }
+              if (component.types.includes('administrative_area_level_2')) {
+                province = component.long_name;
+              }
+              if (component.types.includes('postal_code')) {
+                postalCode = component.long_name;
+              }
+            });
+
+            // Si no se encuentra la ciudad como locality, buscar en administrative_area_level_3
+            if (!city) {
+              components.forEach((component) => {
+                if (component.types.includes('administrative_area_level_3')) {
+                  city = component.long_name;
+                }
+              });
+            }
+
+            // Hacer match inteligente con las ciudades de la lista
+            let matchedCity = city;
+            if (city) {
+              const normalizedCity = city.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+              const found = SPANISH_CITIES.find(c => 
+                c.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() === normalizedCity
+              );
+              
+              if (found) {
+                matchedCity = found;
+              } else {
+                const partialMatch = SPANISH_CITIES.find(c => {
+                  const normalizedListCity = c.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+                  return normalizedCity.includes(normalizedListCity) || normalizedListCity.includes(normalizedCity);
+                });
+                
+                if (partialMatch) {
+                  matchedCity = partialMatch;
+                }
+              }
+            }
+
+            const newLocation = {
+              address: result.formatted_address,
+              city: matchedCity || 'Madrid',
+              province: province || 'Madrid',
+              postalCode: postalCode || '28001',
+              latitude: newLat,
+              longitude: newLng,
+            };
+
+            console.log('✅ Nueva ubicación:', newLocation);
+            setSelectedLocation(newLocation);
+            setSearchQuery(result.formatted_address);
+            onLocationSelect(newLocation);
+
+            // Actualizar título del marcador
+            if (markerRef.current) {
+              markerRef.current.setTitle(result.formatted_address);
+            }
+
+            setIsSearching(false);
+          } else {
+            console.error('❌ Error en geocoding reverso:', status);
+            alert('Error al obtener la dirección de la nueva ubicación');
+            setIsSearching(false);
+          }
+        }
+      );
+    } catch (error) {
+      console.error('❌ Error en handleMarkerDragEnd:', error);
+      alert('Error al procesar la nueva ubicación');
+      setIsSearching(false);
+    }
+  }, [onLocationSelect]);
+
   // Inicializar servicios de Google Maps
   useEffect(() => {
     const initGoogleMaps = async () => {
@@ -87,7 +188,11 @@ export default function GoogleMapsLocationPicker({
               map: mapRef.current,
               title: initialLocation.address,
               animation: google.maps.Animation.DROP,
+              draggable: true, // Hacer el marcador draggable
             });
+
+            // Agregar listener para cuando se suelte el marcador
+            markerRef.current.addListener('dragend', handleMarkerDragEnd);
           }
         }
 
@@ -98,7 +203,8 @@ export default function GoogleMapsLocationPicker({
     };
 
     initGoogleMaps();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Solo ejecutar al montar el componente
 
   // Autocompletado de Places API
   const fetchSuggestions = useCallback(async (input: string) => {
@@ -266,7 +372,11 @@ export default function GoogleMapsLocationPicker({
                 map: mapRef.current,
                 title: result.formatted_address,
                 animation: google.maps.Animation.DROP,
+                draggable: true, // Hacer el marcador draggable
               });
+
+              // Agregar listener para cuando se suelte el marcador
+              markerRef.current.addListener('dragend', handleMarkerDragEnd);
             }
           }
 
@@ -353,10 +463,22 @@ export default function GoogleMapsLocationPicker({
       )}
 
       {/* Map Preview */}
-      <div 
-        ref={mapDivRef}
-        className="w-full h-80 bg-gray-100 rounded-lg border border-gray-300 overflow-hidden"
-      />
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <p className="text-sm text-gray-600">
+            💡 <span className="font-medium">Arrastra el pin</span> para ajustar la ubicación exacta
+          </p>
+          {isSearching && (
+            <span className="text-xs text-primary-600 animate-pulse">
+              Actualizando...
+            </span>
+          )}
+        </div>
+        <div 
+          ref={mapDivRef}
+          className="w-full h-80 bg-gray-100 rounded-lg border border-gray-300 overflow-hidden"
+        />
+      </div>
 
     </div>
   );
