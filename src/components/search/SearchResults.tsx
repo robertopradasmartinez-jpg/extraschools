@@ -24,7 +24,7 @@ interface Activity {
 
 interface SearchResultsProps {
   filters: FilterState
-  onActivitiesUpdate?: (activities: Activity[]) => void
+  onActivitiesUpdate?: (activities: Activity[], total?: number) => void
   currentPage?: number
   onPageChange?: (page: number) => void
 }
@@ -74,7 +74,7 @@ export default function SearchResults({
         
         // Notify parent component of activities update
         if (onActivitiesUpdate) {
-          onActivitiesUpdate(fetchedActivities)
+          onActivitiesUpdate(fetchedActivities, data.total || 0)
         }
         
         // Scroll to top when page changes

@@ -24,6 +24,11 @@ export async function GET(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const where: any = {
       published: true,
+      // Solo actividades de empresas con suscripción activa
+      company: {
+        stripeSubscriptionId: { not: null },
+        stripeCurrentPeriodEnd: { gt: new Date() },
+      },
     };
 
     // Filtro por categoría
@@ -87,8 +92,6 @@ export async function GET(request: Request) {
         company: {
           select: {
             name: true,
-            stripeSubscriptionId: true,
-            stripeCurrentPeriodEnd: true,
           },
         },
         reviews: {
@@ -104,27 +107,14 @@ export async function GET(request: Request) {
       take: limit,
     });
 
-    // Filtrar solo empresas con suscripción activa
-    const activitiesFiltered = activities.filter(activity => {
-      if (!activity.company.stripeSubscriptionId || !activity.company.stripeCurrentPeriodEnd) {
-        return false;
-      }
-      return new Date(activity.company.stripeCurrentPeriodEnd) > new Date();
-    });
-
     // Calcular rating promedio para cada actividad
-    const activitiesWithRating = activitiesFiltered.map(activity => {
+    const activitiesWithRating = activities.map(activity => {
       const avgRating = activity.reviews.length > 0
         ? activity.reviews.reduce((acc, r) => acc + r.rating, 0) / activity.reviews.length
         : 0;
 
-      // Remover info sensible de suscripción antes de enviar al cliente
-      const { company, ...activityData } = activity;
-      const { stripeSubscriptionId, stripeCurrentPeriodEnd, ...companyData } = company;
-
       return {
-        ...activityData,
-        company: companyData,
+        ...activity,
         averageRating: Math.round(avgRating * 10) / 10,
         reviewCount: activity.reviews.length,
       };
@@ -132,10 +122,10 @@ export async function GET(request: Request) {
 
     return NextResponse.json({
       activities: activitiesWithRating,
-      total: activitiesFiltered.length,
+      total: totalCount,
       page,
       limit,
-      totalPages: Math.ceil(activitiesFiltered.length / limit),
+      totalPages: Math.ceil(totalCount / limit),
     });
   } catch (error) {
     console.error('Error al buscar actividades:', error);

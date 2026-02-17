@@ -22,6 +22,8 @@ export default function SearchPageClient() {
   const searchParams = useSearchParams()
   
   const [activities, setActivities] = useState<any[]>([])
+  const [allActivities, setAllActivities] = useState<any[]>([]) // Para el mapa (todas las actividades)
+  const [totalCount, setTotalCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
   
   // Initialize filters from URL params on mount
@@ -38,6 +40,36 @@ export default function SearchPageClient() {
   }
 
   const [filters, setFilters] = useState<FilterState>(getInitialFilters())
+  
+  // Cargar todas las actividades para el mapa cuando cambien los filtros
+  useEffect(() => {
+    fetchAllActivitiesForMap()
+  }, [filters])
+  
+  const fetchAllActivitiesForMap = async () => {
+    try {
+      const params = new URLSearchParams()
+      
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value && value !== 'all' && value !== '') {
+          params.set(key, value)
+        }
+      })
+      
+      // Solicitar todas las actividades sin paginación (límite alto)
+      params.set('limit', '1000')
+      params.set('page', '1')
+      
+      const response = await fetch(`/api/activities?${params.toString()}`)
+      const data = await response.json()
+      
+      if (response.ok) {
+        setAllActivities(data.activities || [])
+      }
+    } catch (err) {
+      console.error('Error al cargar actividades para el mapa:', err)
+    }
+  }
   
   // Initialize page from URL
   useEffect(() => {
@@ -87,8 +119,9 @@ export default function SearchPageClient() {
     router.push(newUrl, { scroll: false })
   }
 
-  const handleActivitiesUpdate = (newActivities: any[]) => {
+  const handleActivitiesUpdate = (newActivities: any[], total?: number) => {
     setActivities(newActivities)
+    if (total !== undefined) setTotalCount(total)
   }
 
   return (
@@ -97,7 +130,7 @@ export default function SearchPageClient() {
       <SearchFilters onFilterChange={handleFilterChange} initialFilters={filters} />
 
       {/* Map Section - Always Visible */}
-      <SearchMapSection activities={activities} />
+      <SearchMapSection activities={allActivities} totalCount={totalCount} />
 
       {/* Results Section */}
       <SearchResults 

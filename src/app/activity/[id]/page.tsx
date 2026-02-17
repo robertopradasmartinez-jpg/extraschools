@@ -206,7 +206,10 @@ export default async function ActivityDetailPage({
                   <Euro className="w-5 h-5 mx-auto mb-1 text-gray-600" />
                   <p className="text-xs text-gray-600">Precio</p>
                   <p className="font-semibold text-gray-900">
-                    {formatPrice(activity.price)}{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}
+                    {(activity as any).priceType === 'otro' && (activity as any).priceTypeCustom
+                      ? `Precio: ${(activity as any).priceTypeCustom}`
+                      : `${formatPrice(activity.price)}${getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}`
+                    }
                   </p>
                 </div>
                 <div className="text-center p-3 bg-gray-50 rounded-lg">
@@ -262,10 +265,18 @@ export default async function ActivityDetailPage({
               <div className="bg-white rounded-lg shadow-lg p-6 border border-gray-200">
                 <div className="mb-6">
                   <div className="flex items-baseline">
-                    <span className="text-3xl font-bold text-gray-900">
-                      {formatPrice(activity.price)}
-                    </span>
-                    <span className="text-gray-600 ml-2">{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}</span>
+                    {(activity as any).priceType === 'otro' && (activity as any).priceTypeCustom ? (
+                      <span className="text-3xl font-bold text-gray-900">
+                        Precio: {(activity as any).priceTypeCustom}
+                      </span>
+                    ) : (
+                      <>
+                        <span className="text-3xl font-bold text-gray-900">
+                          {formatPrice(activity.price)}
+                        </span>
+                        <span className="text-gray-600 ml-2">{getPriceTypeLabel((activity as any).priceType || 'mes', (activity as any).priceTypeCustom)}</span>
+                      </>
+                    )}
                   </div>
                 </div>
 

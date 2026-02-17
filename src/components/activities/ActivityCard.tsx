@@ -107,10 +107,18 @@ export default function ActivityCard({
 
           {/* Price */}
           <div className="flex items-baseline pt-2 border-t border-gray-100">
-            <span className="text-2xl font-black bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
-              {formatPrice(price)}
-            </span>
-            <span className="text-sm text-gray-500 ml-2 font-semibold">{getPriceTypeLabel(priceType, priceTypeCustom)}</span>
+            {priceType === 'otro' && priceTypeCustom ? (
+              <span className="text-sm font-bold bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+                Precio: {priceTypeCustom}
+              </span>
+            ) : (
+              <>
+                <span className="text-2xl font-black bg-gradient-to-r from-primary-500 to-secondary-500 bg-clip-text text-transparent">
+                  {formatPrice(price)}
+                </span>
+                <span className="text-sm text-gray-500 ml-2 font-semibold">{getPriceTypeLabel(priceType, priceTypeCustom)}</span>
+              </>
+            )}
           </div>
         </div>
       </Link>

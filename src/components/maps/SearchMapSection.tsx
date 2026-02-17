@@ -27,9 +27,13 @@ interface Activity {
 
 interface SearchMapSectionProps {
   activities: Activity[];
+  totalCount?: number;
 }
 
-export default function SearchMapSection({ activities }: SearchMapSectionProps) {
+export default function SearchMapSection({ activities, totalCount }: SearchMapSectionProps) {
+  // Use totalCount if it's greater than 0, otherwise fall back to activities.length
+  const displayCount = totalCount && totalCount > 0 ? totalCount : activities.length;
+  
   return (
     <div className="mb-8 mt-4 relative z-0">
       <div className="bg-white rounded-lg shadow-md p-6">
@@ -41,7 +45,7 @@ export default function SearchMapSection({ activities }: SearchMapSectionProps) 
             </h2>
           </div>
           <span className="text-sm text-gray-600 bg-primary-50 px-3 py-1 rounded-full">
-            {activities.length} {activities.length === 1 ? 'actividad' : 'actividades'}
+            {displayCount} {displayCount === 1 ? 'actividad' : 'actividades'}
           </span>
         </div>
         <GoogleMultipleMarkersMap activities={activities} height="600px" />

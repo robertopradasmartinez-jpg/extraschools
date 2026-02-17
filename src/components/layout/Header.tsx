@@ -82,6 +82,9 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-1">
+            <Link href="/" className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary-500 hover:bg-blue-50 rounded-lg transition">
+              {t('home')}
+            </Link>
             <Link href="/search" className="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-primary-500 hover:bg-blue-50 rounded-lg transition">
               {t('search')}
             </Link>
@@ -179,6 +182,9 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-1 border-t border-gray-100">
+            <Link href="/" className="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-primary-500 rounded-xl transition mx-2">
+              {t('home')}
+            </Link>
             <Link href="/search" className="block px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-blue-50 hover:text-primary-500 rounded-xl transition mx-2">
               {t('search')}
             </Link>

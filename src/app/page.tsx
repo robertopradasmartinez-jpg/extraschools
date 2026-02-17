@@ -112,7 +112,7 @@ export default async function Home() {
       {/* Stats Section */}
       <section className="py-12 bg-white border-b">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-4xl font-black text-primary-500 mb-2">500+</div>
               <div className="text-gray-600 font-medium">Actividades</div>
@@ -120,10 +120,6 @@ export default async function Home() {
             <div className="text-center">
               <div className="text-4xl font-black text-secondary-500 mb-2">100+</div>
               <div className="text-gray-600 font-medium">Empresas</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-black text-yellow-500 mb-2">50+</div>
-              <div className="text-gray-600 font-medium">Ciudades</div>
             </div>
             <div className="text-center">
               <div className="text-4xl font-black text-primary-500 mb-2">4.8</div>
