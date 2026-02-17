@@ -191,7 +191,7 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               onChange={(e) => handleFilterChange('ageMin', e.target.value)}
               placeholder="Ej: 6"
               min="3"
-              max="18"
+              max="65"
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>
@@ -206,7 +206,7 @@ export default function SearchFilters({ onFilterChange, initialFilters }: Search
               onChange={(e) => handleFilterChange('ageMax', e.target.value)}
               placeholder="Ej: 12"
               min="3"
-              max="18"
+              max="65"
               className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-primary-500 focus:outline-none font-medium transition"
             />
           </div>

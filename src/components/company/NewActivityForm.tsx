@@ -223,7 +223,7 @@ export default function NewActivityForm() {
                 type="number"
                 required
                 min="0"
-                max="18"
+                max="65"
                 value={formData.ageMin}
                 onChange={(e) => setFormData({ ...formData, ageMin: parseInt(e.target.value) })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
@@ -238,7 +238,7 @@ export default function NewActivityForm() {
                 type="number"
                 required
                 min="0"
-                max="18"
+                max="65"
                 value={formData.ageMax}
                 onChange={(e) => setFormData({ ...formData, ageMax: parseInt(e.target.value) })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
