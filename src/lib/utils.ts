@@ -33,6 +33,7 @@ export function formatDate(date: Date | string): string {
 
 /**
  * Verifica si una empresa tiene una suscripción activa y válida
+ * Incluye suscripciones de pago y pruebas gratuitas
  */
 export function hasActiveSubscription(company: {
   stripeSubscriptionId: string | null;
@@ -40,7 +41,7 @@ export function hasActiveSubscription(company: {
 } | null): boolean {
   if (!company) return false;
   
-  // Debe tener un ID de suscripción
+  // Debe tener un ID de suscripción (incluye trials)
   if (!company.stripeSubscriptionId) return false;
   
   // Debe tener una fecha de fin de período
@@ -48,4 +49,24 @@ export function hasActiveSubscription(company: {
   
   // La fecha de fin debe ser futura
   return new Date(company.stripeCurrentPeriodEnd) > new Date();
+}
+
+/**
+ * Verifica si una empresa está en periodo de prueba gratuita
+ */
+export function isOnFreeTrial(company: {
+  stripeSubscriptionId: string | null;
+  stripeCurrentPeriodEnd: Date | null;
+} | null): boolean {
+  if (!company) return false;
+  
+  // Verificar si tiene el ID de prueba gratuita
+  if (company.stripeSubscriptionId?.startsWith('TRIAL_')) {
+    // Y que la prueba aún esté activa
+    if (company.stripeCurrentPeriodEnd) {
+      return new Date(company.stripeCurrentPeriodEnd) > new Date();
+    }
+  }
+  
+  return false;
 }

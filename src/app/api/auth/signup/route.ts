@@ -54,13 +54,18 @@ export async function POST(request: Request) {
       },
     });
 
-    // Si es una empresa, crear el perfil de empresa
+    // Si es una empresa, crear el perfil de empresa con prueba gratuita
     if (role === 'COMPANY' && companyName) {
+      // Fecha de fin de prueba gratuita: 31-08-2026
+      const trialEndDate = new Date('2026-08-31T23:59:59.999Z');
+      
       await prisma.company.create({
         data: {
           userId: user.id,
           name: companyName,
           phone: companyPhone || '',
+          stripeSubscriptionId: 'TRIAL_FREE_2026',
+          stripeCurrentPeriodEnd: trialEndDate,
         },
       });
     }

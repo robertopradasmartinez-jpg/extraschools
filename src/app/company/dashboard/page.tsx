@@ -1,12 +1,14 @@
 import { auth } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { useTranslations } from 'next-intl';
+import { isOnFreeTrial } from '@/lib/utils';
 import { 
   FileText, 
   Eye, 
   Heart, 
   Star,
   MessageSquare,
+  Gift,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -122,6 +124,8 @@ export default async function CompanyDashboardPage() {
 
   const { company, stats } = data;
 
+  const isTrial = isOnFreeTrial(company);
+
   const statCards = [
     {
       name: 'Actividades Totales',
@@ -164,6 +168,40 @@ export default async function CompanyDashboardPage() {
           Gestiona tus actividades y visualiza el rendimiento de tu empresa
         </p>
       </div>
+
+      {/* Trial Banner */}
+      {isTrial && company.stripeCurrentPeriodEnd && (
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 rounded-lg p-6">
+          <div className="flex items-start">
+            <div className="flex-shrink-0">
+              <Gift className="h-6 w-6 text-green-600" />
+            </div>
+            <div className="ml-3 flex-1">
+              <h3 className="text-lg font-semibold text-green-900">
+                🎉 Acceso Gratuito hasta el 31 de Agosto de 2026
+              </h3>
+              <p className="mt-1 text-sm text-green-800">
+                Disfruta de acceso completo a todas las funcionalidades sin coste. 
+                Publica actividades ilimitadas, gestiona tu perfil y conecta con familias.
+              </p>
+              <div className="mt-3 flex items-center space-x-4">
+                <Link
+                  href="/company/activities/new"
+                  className="text-sm font-medium text-green-700 hover:text-green-800 underline"
+                >
+                  Crear tu primera actividad →
+                </Link>
+                <Link
+                  href="/company/subscription"
+                  className="text-sm font-medium text-green-700 hover:text-green-800 underline"
+                >
+                  Ver planes futuros
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
