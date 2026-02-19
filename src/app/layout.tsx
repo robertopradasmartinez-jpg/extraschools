@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
+import NextTopLoader from 'nextjs-toploader';
 import SessionProvider from '@/components/providers/SessionProvider';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -37,6 +38,17 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className={inter.className}>
+        <NextTopLoader
+          color="#f43f5e"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={3}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #f43f5e,0 0 5px #f43f5e"
+        />
         <SessionProvider>
           <NextIntlClientProvider locale="es" messages={messages}>
             <div className="flex flex-col min-h-screen">
