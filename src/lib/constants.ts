@@ -65,6 +65,7 @@ export type PriceType = typeof PRICE_TYPES[number]['value'];
 
 // Lista completa de categorías de actividades extraescolares
 export const ACTIVITY_CATEGORIES = [
+  'Academia de repaso',
   'Arte',
   'Danza',
   'Deportes',
