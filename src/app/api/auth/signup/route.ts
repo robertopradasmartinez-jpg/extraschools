@@ -44,31 +44,47 @@ export async function POST(request: Request) {
     // Hash de la contraseña
     const hashedPassword = await hash(password, 12);
 
-    // Crear usuario
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-      },
-    });
+    // Validación adicional para empresas
+    if (role === 'COMPANY' && !companyName) {
+      return NextResponse.json(
+        { error: 'El nombre de la empresa es requerido' },
+        { status: 400 }
+      );
+    }
 
-    // Si es una empresa, crear el perfil de empresa con prueba gratuita
-    if (role === 'COMPANY' && companyName) {
-      // Fecha de fin de prueba gratuita: 31-08-2026
-      const trialEndDate = new Date('2026-08-31T23:59:59.999Z');
-      
-      await prisma.company.create({
+    // Usar transacción para garantizar consistencia
+    const user = await prisma.$transaction(async (tx) => {
+      // Crear usuario
+      const newUser = await tx.user.create({
         data: {
-          userId: user.id,
-          name: companyName,
-          phone: companyPhone || '',
-          stripeSubscriptionId: 'TRIAL_FREE_2026',
-          stripeCurrentPeriodEnd: trialEndDate,
+          name,
+          email,
+          password: hashedPassword,
+          role,
         },
       });
-    }
+
+      // Si es una empresa, crear el perfil de empresa con prueba gratuita
+      if (role === 'COMPANY') {
+        // Fecha de fin de prueba gratuita: 31-08-2026
+        const trialEndDate = new Date('2026-08-31T23:59:59.999Z');
+        // Generar ID único para la suscripción trial
+        const uniqueTrialId = `TRIAL_FREE_2026_${newUser.id}`;
+        
+        await tx.company.create({
+          data: {
+            userId: newUser.id,
+            name: companyName!,
+            phone: companyPhone || '',
+            description: '',
+            stripeSubscriptionId: uniqueTrialId,
+            stripeCurrentPeriodEnd: trialEndDate,
+          },
+        });
+      }
+
+      return newUser;
+    });
 
     return NextResponse.json(
       {

@@ -85,17 +85,28 @@ export default function GoogleMultipleMarkersMap({
 
         // Inicializar mapa si no existe
         if (mapDivRef.current && !mapRef.current) {
+          // Detectar si es móvil para ajustar controles
+          const isMobile = window.innerWidth < 640;
+          
           mapRef.current = new mapsLib.Map(mapDivRef.current, {
             center: centerPoint,
             zoom: 6,
-            mapTypeControl: true,
+            mapTypeControl: !isMobile, // Ocultar control de tipo en móvil
             streetViewControl: false,
-            fullscreenControl: true,
+            fullscreenControl: !isMobile, // Ocultar pantalla completa en móvil
             zoomControl: true,
+            // En móvil, posicionar controles de manera más compacta
+            zoomControlOptions: {
+              position: isMobile ? google.maps.ControlPosition.RIGHT_BOTTOM : google.maps.ControlPosition.RIGHT_CENTER,
+            },
           });
 
           // Crear un solo InfoWindow para reutilizar
-          infoWindowRef.current = new google.maps.InfoWindow();
+          // Con configuración optimizada para móvil
+          infoWindowRef.current = new google.maps.InfoWindow({
+            maxWidth: isMobile ? 280 : 320,
+            pixelOffset: new google.maps.Size(0, isMobile ? -10 : 0),
+          });
         }
 
         // Limpiar marcadores anteriores
@@ -125,44 +136,87 @@ export default function GoogleMultipleMarkersMap({
           // Crear contenido del InfoWindow
           const createInfoWindowContent = (act: Activity): HTMLDivElement => {
             const container = document.createElement('div');
-            container.className = 'min-w-[250px] max-w-[300px]';
+            // Diseño responsive: más compacto en móvil
+            const isMobile = window.innerWidth < 640;
             
-            container.innerHTML = `
-              <div class="p-2">
-                ${act.images[0] ? `
-                  <div class="relative w-full h-32 mb-2 rounded overflow-hidden">
-                    <img 
-                      src="${act.images[0]}" 
-                      alt="${act.title}"
-                      class="w-full h-full object-cover"
-                    />
+            if (isMobile) {
+              // Versión móvil: compacta, sin precio, optimizada para pantallas pequeñas
+              container.className = 'w-[280px]';
+              container.innerHTML = `
+                <div class="p-3">
+                  ${act.images[0] ? `
+                    <div class="relative w-full h-24 mb-3 rounded-lg overflow-hidden shadow-sm">
+                      <img 
+                        src="${act.images[0]}" 
+                        alt="${act.title}"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  ` : ''}
+                  <h3 class="font-bold text-base mb-2 leading-tight text-gray-900">
+                    ${act.title}
+                  </h3>
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                      📍 ${act.city}
+                    </span>
+                    <span class="text-xs text-gray-600 bg-blue-50 px-2 py-1 rounded">
+                      🏷️ ${act.category}
+                    </span>
                   </div>
-                ` : ''}
-                <h3 class="font-semibold text-sm mb-2 line-clamp-2">
-                  ${act.title}
-                </h3>
-                <p class="text-xs text-gray-600 mb-1">
-                  📍 ${act.city}
-                </p>
-                <p class="text-xs text-gray-600 mb-2">
-                  🏷️ ${act.category}
-                </p>
-                <div class="flex items-center justify-between mt-3">
-                  <span class="font-bold text-base" style="color: #4A90E2;">
-                    ${act.price}€${act.priceType === 'otro' ? `/${act.priceTypeCustom || ''}` : `/${act.priceType || 'mes'}`}
-                  </span>
                   <a
                     href="/activity/${act.id}"
-                    class="text-sm text-white px-4 py-2 rounded transition inline-block font-medium"
+                    class="block text-center text-sm text-white px-4 py-3 rounded-lg transition font-semibold w-full shadow-md"
                     style="background-color: #4A90E2;"
                     onmouseover="this.style.backgroundColor='#3b73b5'"
                     onmouseout="this.style.backgroundColor='#4A90E2'"
+                    ontouchstart="this.style.backgroundColor='#3b73b5'"
+                    ontouchend="this.style.backgroundColor='#4A90E2'"
                   >
-                    Ver detalles
+                    Ver más →
                   </a>
                 </div>
-              </div>
-            `;
+              `;
+            } else {
+              // Versión escritorio: con precio y más espaciosa
+              container.className = 'min-w-[250px] max-w-[320px]';
+              container.innerHTML = `
+                <div class="p-2">
+                  ${act.images[0] ? `
+                    <div class="relative w-full h-32 mb-2 rounded overflow-hidden">
+                      <img 
+                        src="${act.images[0]}" 
+                        alt="${act.title}"
+                        class="w-full h-full object-cover"
+                      />
+                    </div>
+                  ` : ''}
+                  <h3 class="font-semibold text-sm mb-2 line-clamp-2">
+                    ${act.title}
+                  </h3>
+                  <p class="text-xs text-gray-600 mb-1">
+                    📍 ${act.city}
+                  </p>
+                  <p class="text-xs text-gray-600 mb-2">
+                    🏷️ ${act.category}
+                  </p>
+                  <div class="flex items-center justify-between mt-3">
+                    <span class="font-bold text-base" style="color: #4A90E2;">
+                      ${act.price}€${act.priceType === 'otro' ? `/${act.priceTypeCustom || ''}` : `/${act.priceType || 'mes'}`}
+                    </span>
+                    <a
+                      href="/activity/${act.id}"
+                      class="text-sm text-white px-4 py-2 rounded transition inline-block font-medium"
+                      style="background-color: #4A90E2;"
+                      onmouseover="this.style.backgroundColor='#3b73b5'"
+                      onmouseout="this.style.backgroundColor='#4A90E2'"
+                    >
+                      Ver detalles
+                    </a>
+                  </div>
+                </div>
+              `;
+            }
             
             return container;
           };
@@ -170,8 +224,24 @@ export default function GoogleMultipleMarkersMap({
           // Evento click en el marcador
           marker.addListener('click', () => {
             if (infoWindowRef.current && mapRef.current) {
-              infoWindowRef.current.setContent(createInfoWindowContent(activity));
-              infoWindowRef.current.open(mapRef.current, marker);
+              const content = createInfoWindowContent(activity);
+              infoWindowRef.current.setContent(content);
+              
+              // Configurar opciones del InfoWindow según el dispositivo
+              const isMobile = window.innerWidth < 640;
+              if (isMobile) {
+                // En móvil, centrar el mapa en el marcador antes de abrir el InfoWindow
+                // para que la tarjeta quede visible sin necesidad de scroll
+                mapRef.current.panTo(marker.getPosition() as google.maps.LatLng);
+                
+                // Pequeño delay para suavizar la animación
+                setTimeout(() => {
+                  infoWindowRef.current?.open(mapRef.current!, marker);
+                }, 150);
+              } else {
+                // En escritorio, abrir directamente
+                infoWindowRef.current.open(mapRef.current, marker);
+              }
             }
           });
 

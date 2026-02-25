@@ -47,13 +47,18 @@ export default function GoogleMapComponent({
 
         // Inicializar mapa
         if (mapDivRef.current && !mapRef.current) {
+          const isMobile = window.innerWidth < 640;
+          
           mapRef.current = new mapsLib.Map(mapDivRef.current, {
             center: { lat: latitude, lng: longitude },
             zoom: zoom,
-            mapTypeControl: true,
-            streetViewControl: true,
-            fullscreenControl: true,
+            mapTypeControl: !isMobile, // Ocultar en móvil
+            streetViewControl: !isMobile, // Ocultar en móvil
+            fullscreenControl: !isMobile, // Ocultar en móvil
             zoomControl: true,
+            zoomControlOptions: {
+              position: isMobile ? google.maps.ControlPosition.RIGHT_BOTTOM : google.maps.ControlPosition.RIGHT_CENTER,
+            },
           });
 
           // Crear marcador

@@ -36,19 +36,22 @@ export default function SearchMapSection({ activities, totalCount }: SearchMapSe
   
   return (
     <div className="mb-8 mt-4 relative z-0">
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="bg-white rounded-lg shadow-md p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
             <Map className="w-5 h-5 text-primary-500 mr-2" />
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900">
               Mapa de España
             </h2>
           </div>
-          <span className="text-sm text-gray-600 bg-primary-50 px-3 py-1 rounded-full">
+          <span className="text-xs sm:text-sm text-gray-600 bg-primary-50 px-2 sm:px-3 py-1 rounded-full">
             {displayCount} {displayCount === 1 ? 'actividad' : 'actividades'}
           </span>
         </div>
-        <GoogleMultipleMarkersMap activities={activities} height="600px" />
+        {/* Altura responsive: más pequeña en móvil */}
+        <div className="h-[400px] sm:h-[500px] md:h-[600px]">
+          <GoogleMultipleMarkersMap activities={activities} height="100%" />
+        </div>
       </div>
     </div>
   );
