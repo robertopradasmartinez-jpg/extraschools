@@ -142,34 +142,33 @@ export default function GoogleMultipleMarkersMap({
             const isMobile = window.innerWidth < 640;
             
             if (isMobile) {
-              // Versión móvil: ultra compacta para evitar scroll vertical
-              container.className = 'w-[280px] max-h-[220px] overflow-hidden';
+              // Versión móvil: diseño fijo sin posibilidad de scroll
+              container.style.cssText = 'width: 280px; max-height: 200px; overflow: hidden;';
               container.innerHTML = `
-                <div class="p-2">
+                <div style="padding: 8px; height: 100%; display: flex; flex-direction: column; overflow: hidden;">
                   ${act.images[0] ? `
-                    <div class="relative w-full h-16 mb-1.5 rounded overflow-hidden">
+                    <div style="width: 100%; height: 60px; border-radius: 8px; overflow: hidden; flex-shrink: 0; margin-bottom: 6px;">
                       <img 
                         src="${act.images[0]}" 
                         alt="${act.title}"
-                        class="w-full h-full object-cover"
+                        style="width: 100%; height: 100%; object-fit: cover;"
                       />
                     </div>
                   ` : ''}
-                  <h3 class="font-bold text-sm mb-1 leading-tight text-gray-900 line-clamp-2" style="max-height: 2.5em; overflow: hidden;">
+                  <h3 style="font-weight: 700; font-size: 13px; line-height: 1.3; color: #111; margin: 0 0 6px 0; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; max-height: 2.6em; flex-shrink: 0;">
                     ${act.title}
                   </h3>
-                  <div class="flex items-center gap-1 mb-1.5 flex-wrap">
-                    <span class="text-xs text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap">
+                  <div style="display: flex; gap: 4px; margin-bottom: 6px; flex-shrink: 0; font-size: 11px;">
+                    <span style="color: #666; background: #f3f4f6; padding: 2px 6px; border-radius: 4px; white-space: nowrap;">
                       📍 ${act.city}
                     </span>
-                    <span class="text-xs text-gray-600 bg-blue-50 px-1.5 py-0.5 rounded whitespace-nowrap">
+                    <span style="color: #666; background: #eff6ff; padding: 2px 6px; border-radius: 4px; white-space: nowrap;">
                       🏷️ ${act.category}
                     </span>
                   </div>
                   <a
                     href="/activity/${act.id}"
-                    class="block text-center text-sm text-white px-3 py-1.5 rounded-lg transition font-semibold w-full"
-                    style="background-color: #4A90E2;"
+                    style="display: block; text-align: center; font-size: 13px; font-weight: 600; color: white; background-color: #4A90E2; padding: 8px 12px; border-radius: 8px; text-decoration: none; flex-shrink: 0; margin-top: auto;"
                     onmouseover="this.style.backgroundColor='#3b73b5'"
                     onmouseout="this.style.backgroundColor='#4A90E2'"
                     ontouchstart="this.style.backgroundColor='#3b73b5'"
