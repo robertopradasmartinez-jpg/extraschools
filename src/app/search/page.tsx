@@ -1,9 +1,21 @@
 import SearchPageClient from '@/components/search/SearchPageClient'
 import { Suspense } from 'react'
+import { Metadata } from 'next'
 
 // Force dynamic rendering to always fetch fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  title: 'Buscar Actividades Extraescolares',
+  description: 'Busca y compara actividades extraescolares en toda España. Filtra por categoría, ciudad, edad y precio. Encuentra la actividad perfecta para tus hijos.',
+  keywords: ['buscar actividades', 'extraescolares cerca', 'actividades por ciudad', 'comparar precios extraescolares'],
+  openGraph: {
+    title: 'Buscar Actividades Extraescolares | ExtraSchools',
+    description: 'Encuentra la actividad perfecta para tus hijos. Filtra por categoría, ciudad, edad y precio.',
+    url: 'https://extraschools.es/search',
+  },
+};
 
 export default function SearchPage() {
   return (

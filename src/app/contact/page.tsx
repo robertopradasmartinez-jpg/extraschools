@@ -3,8 +3,15 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import ContactForm from '@/components/contact/ContactForm';
 
 export const metadata: Metadata = {
-  title: 'Contacto | ExtraSchools',
-  description: 'Ponte en contacto con nosotros. Estamos aquí para ayudarte.',
+  title: 'Contacto',
+  description: 'Ponte en contacto con ExtraSchools. Estamos aquí para ayudarte con cualquier pregunta sobre actividades extraescolares.',
+  keywords: ['contacto extraschools', 'ayuda', 'soporte', 'consultas'],
+  openGraph: {
+    title: 'Contacto | ExtraSchools',
+    description: 'Ponte en contacto con nosotros. Estamos aquí para ayudarte.',
+    url: 'https://extraschools.es/contact',
+    type: 'website',
+  },
 };
 
 export default function ContactPage() {

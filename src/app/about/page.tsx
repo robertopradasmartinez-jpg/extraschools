@@ -1,8 +1,16 @@
 import { Heart, Target, Users, Shield, Lightbulb, TrendingUp } from 'lucide-react';
+import { Metadata } from 'next';
 
-export const metadata = {
-  title: 'Sobre Nosotros - ExtraSchools',
-  description: 'Conoce la misión y valores de ExtraSchools',
+export const metadata: Metadata = {
+  title: 'Sobre Nosotros',
+  description: 'ExtraSchools conecta familias con las mejores actividades extraescolares en España. Conoce nuestra misión, valores y compromiso con la educación infantil.',
+ keywords: ['sobre extraschools', 'quiénes somos', 'misión educativa', 'valores', 'actividades extraescolares'],
+  openGraph: {
+    title: 'Sobre Nosotros | ExtraSchools',
+    description: 'Conectamos familias con las mejores actividades extraescolares en España',
+    url: 'https://extraschools.es/about',
+    type: 'website',
+  },
 };
 
 export default function AboutPage() {

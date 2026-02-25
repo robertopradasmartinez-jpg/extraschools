@@ -1,0 +1,26 @@
+# robots.txt para ExtraSchools
+# Permite que todos los motores de búsqueda rastreen el sitio
+
+User-agent: *
+Allow: /
+
+# Páginas que no queremos indexar
+Disallow: /api/
+Disallow: /admin/
+Disallow: /company/
+Disallow: /profile
+Disallow: /messages
+Disallow: /favorites
+
+# Permitir páginas públicas importantes
+Allow: /search
+Allow: /activity/
+Allow: /blog/
+Allow: /about
+Allow: /contact
+
+# Sitemap
+Sitemap: https://extraschools.es/sitemap.xml
+
+# Crawl-delay (opcional, ayuda a no sobrecargar el servidor)
+Crawl-delay: 1

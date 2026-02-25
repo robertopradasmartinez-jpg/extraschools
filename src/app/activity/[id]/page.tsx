@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { 
@@ -18,10 +19,60 @@ import AddToFavoritesButton from '@/components/activities/AddToFavoritesButton';
 import ActivityMapSection from '@/components/maps/ActivityMapSection';
 import ContactButton from '@/components/messages/ContactButton';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
+import ActivitySchema from '@/components/seo/ActivitySchema';
 
 // Force dynamic rendering to always fetch fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// Generate metadata
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const { id } = await params;
+  const activity = await prisma.activity.findUnique({
+    where: { id },
+    include: {
+      company: true,
+      reviews: true,
+    },
+  });
+
+  if (!activity) {
+    return {
+      title: 'Actividad no encontrada',
+    };
+  }
+
+  const avgRating = activity.reviews.length > 0
+    ? (activity.reviews.reduce((acc, r) => acc + r.rating, 0) / activity.reviews.length).toFixed(1)
+    : null;
+
+  return {
+    title: activity.title,
+    description: activity.description.substring(0, 160),
+    keywords: [activity.category, activity.city, 'actividad extraescolar', activity.title],
+    openGraph: {
+      title: activity.title,
+      description: activity.description.substring(0, 160),
+      url: `https://extraschools.es/activity/${activity.id}`,
+      images: activity.images.length > 0 ? [
+        {
+          url: activity.images[0],
+          width: 1200,
+          height: 630,
+          alt: activity.title,
+        },
+      ] : [],
+      type: 'website',
+      locale: 'es_ES',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: activity.title,
+      description: activity.description.substring(0, 160),
+      images: activity.images,
+    },
+  };
+}
 
 async function getActivity(id: string, userId?: string) {
   const activity = await prisma.activity.findUnique({
@@ -97,6 +148,9 @@ export default async function ActivityDetailPage({
 
   return (
     <div className="min-h-screen bg-gray-50 relative z-0">
+      {/* Schema.org JSON-LD para SEO */}
+      <ActivitySchema activity={activity} />
+      
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
