@@ -106,6 +106,8 @@ export default function GoogleMultipleMarkersMap({
           infoWindowRef.current = new google.maps.InfoWindow({
             maxWidth: isMobile ? 280 : 320,
             pixelOffset: new google.maps.Size(0, isMobile ? -10 : 0),
+            // Evitar scroll configurando maxHeight
+            maxHeight: isMobile ? undefined : undefined,
           });
         }
 
@@ -141,11 +143,11 @@ export default function GoogleMultipleMarkersMap({
             
             if (isMobile) {
               // Versión móvil: ultra compacta para evitar scroll vertical
-              container.className = 'w-[280px]';
+              container.className = 'w-[280px] max-h-[220px] overflow-hidden';
               container.innerHTML = `
                 <div class="p-2">
                   ${act.images[0] ? `
-                    <div class="relative w-full h-20 mb-2 rounded-lg overflow-hidden">
+                    <div class="relative w-full h-16 mb-1.5 rounded overflow-hidden">
                       <img 
                         src="${act.images[0]}" 
                         alt="${act.title}"
@@ -153,20 +155,20 @@ export default function GoogleMultipleMarkersMap({
                       />
                     </div>
                   ` : ''}
-                  <h3 class="font-bold text-sm mb-1.5 leading-tight text-gray-900 line-clamp-2">
+                  <h3 class="font-bold text-sm mb-1 leading-tight text-gray-900 line-clamp-2" style="max-height: 2.5em; overflow: hidden;">
                     ${act.title}
                   </h3>
-                  <div class="flex items-center gap-1.5 mb-2 text-xs">
-                    <span class="text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded">
+                  <div class="flex items-center gap-1 mb-1.5 flex-wrap">
+                    <span class="text-xs text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded whitespace-nowrap">
                       📍 ${act.city}
                     </span>
-                    <span class="text-gray-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                    <span class="text-xs text-gray-600 bg-blue-50 px-1.5 py-0.5 rounded whitespace-nowrap">
                       🏷️ ${act.category}
                     </span>
                   </div>
                   <a
                     href="/activity/${act.id}"
-                    class="block text-center text-sm text-white px-4 py-2 rounded-lg transition font-semibold w-full"
+                    class="block text-center text-sm text-white px-3 py-1.5 rounded-lg transition font-semibold w-full"
                     style="background-color: #4A90E2;"
                     onmouseover="this.style.backgroundColor='#3b73b5'"
                     onmouseout="this.style.backgroundColor='#4A90E2'"
