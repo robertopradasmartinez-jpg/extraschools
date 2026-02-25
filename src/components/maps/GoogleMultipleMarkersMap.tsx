@@ -140,12 +140,12 @@ export default function GoogleMultipleMarkersMap({
             const isMobile = window.innerWidth < 640;
             
             if (isMobile) {
-              // Versión móvil: compacta, sin precio, optimizada para pantallas pequeñas
+              // Versión móvil: ultra compacta para evitar scroll vertical
               container.className = 'w-[280px]';
               container.innerHTML = `
-                <div class="p-3">
+                <div class="p-2">
                   ${act.images[0] ? `
-                    <div class="relative w-full h-24 mb-3 rounded-lg overflow-hidden shadow-sm">
+                    <div class="relative w-full h-20 mb-2 rounded-lg overflow-hidden">
                       <img 
                         src="${act.images[0]}" 
                         alt="${act.title}"
@@ -153,20 +153,20 @@ export default function GoogleMultipleMarkersMap({
                       />
                     </div>
                   ` : ''}
-                  <h3 class="font-bold text-base mb-2 leading-tight text-gray-900">
+                  <h3 class="font-bold text-sm mb-1.5 leading-tight text-gray-900 line-clamp-2">
                     ${act.title}
                   </h3>
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                  <div class="flex items-center gap-1.5 mb-2 text-xs">
+                    <span class="text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded">
                       📍 ${act.city}
                     </span>
-                    <span class="text-xs text-gray-600 bg-blue-50 px-2 py-1 rounded">
+                    <span class="text-gray-600 bg-blue-50 px-1.5 py-0.5 rounded">
                       🏷️ ${act.category}
                     </span>
                   </div>
                   <a
                     href="/activity/${act.id}"
-                    class="block text-center text-sm text-white px-4 py-3 rounded-lg transition font-semibold w-full shadow-md"
+                    class="block text-center text-sm text-white px-4 py-2 rounded-lg transition font-semibold w-full"
                     style="background-color: #4A90E2;"
                     onmouseover="this.style.backgroundColor='#3b73b5'"
                     onmouseout="this.style.backgroundColor='#4A90E2'"
